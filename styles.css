@@ -201,6 +201,18 @@ body::after {
   letter-spacing: 1px;
 }
 
+.links a.github-star-btn {
+  background: linear-gradient(135deg, rgba(245, 208, 97, 0.15), rgba(245, 208, 97, 0.05));
+  border-color: var(--gold-glow);
+  color: var(--gold);
+}
+
+.links a.github-star-btn:hover {
+  background: linear-gradient(135deg, rgba(245, 208, 97, 0.3), rgba(245, 208, 97, 0.1));
+  box-shadow: 0 0 20px var(--gold-glow);
+  transform: translateY(-2px);
+}
+
 .links a:hover {
   background: rgba(0, 240, 255, 0.15);
   box-shadow: 0 0 15px var(--cyan-glow);
