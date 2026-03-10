@@ -380,7 +380,7 @@ const state = {
   viewMonth: new Date().getMonth(),
   selectedDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 0, 0),
   selectedHour: 12,
-  apiBase: "",
+  apiBase: "/api",
   astroSnapshot: null,
   dayProfile: null,
   monthData: null,
@@ -474,12 +474,18 @@ function selectedInstantDate() {
 function parseApiBase(raw) {
   const value = raw.trim();
   if (!value) return "";
-  try {
-    const url = new URL(value);
-    return url.toString().replace(/\/$/, "");
-  } catch (_error) {
-    return null;
+  if (value.startsWith("http")) {
+    try {
+      const url = new URL(value);
+      return url.toString().replace(/\/$/, "");
+    } catch (_error) {
+      return null;
+    }
   }
+  if (value.startsWith("/")) {
+    return value.replace(/\/$/, "");
+  }
+  return null;
 }
 
 async function apiPost(path, payload) {
@@ -881,8 +887,20 @@ function supportedCalendars() {
   return Object.keys(CALENDAR_LABELS).filter((calendar) => isCalendarSupported(calendar));
 }
 
+const LUNAR_DAY_ZH = [
+  "", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
+  "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
+  "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十",
+];
+
 function sourceDayLabel(sourcePayload) {
-  if (sourcePayload.lunar_day !== undefined) return `${sourcePayload.lunar_day}`;
+  if (sourcePayload.lunar_day !== undefined) {
+    const isZh = state.language === "zh-CN" || state.language === "zh-TW";
+    if (isZh && sourcePayload.lunar_day >= 1 && sourcePayload.lunar_day <= 30) {
+      return LUNAR_DAY_ZH[sourcePayload.lunar_day];
+    }
+    return `${sourcePayload.lunar_day}`;
+  }
   if (sourcePayload.day !== undefined) return `${sourcePayload.day}`;
   return "?";
 }
@@ -1016,10 +1034,18 @@ function weekdayName(date) {
 }
 
 function dayNumber(date, calendar) {
-  return new Intl.DateTimeFormat(formatLocaleWithCalendar(state.language, calendar), {
+  const raw = new Intl.DateTimeFormat(formatLocaleWithCalendar(state.language, calendar), {
     day: "numeric",
     timeZone: state.timezone,
   }).format(date);
+  if (calendar === "chinese") {
+    const isZh = state.language === "zh-CN" || state.language === "zh-TW";
+    if (isZh) {
+      const num = parseInt(raw, 10);
+      if (num >= 1 && num <= 30) return LUNAR_DAY_ZH[num];
+    }
+  }
+  return raw;
 }
 
 function fullDate(date, calendar) {
@@ -1534,7 +1560,7 @@ function loadState() {
     if (Number.isInteger(payload.selectedHour) && payload.selectedHour >= 0 && payload.selectedHour <= 23) {
       state.selectedHour = payload.selectedHour;
     }
-    if (typeof payload.apiBase === "string") state.apiBase = payload.apiBase;
+    if (typeof payload.apiBase === "string") state.apiBase = payload.apiBase || "/api";
     if (payload.sidebarModules && typeof payload.sidebarModules === "object") {
       state.sidebarModules = {
         legacy: payload.sidebarModules.legacy !== false,
@@ -1686,9 +1712,14 @@ function bindEvents() {
   });
 
   refs.resetApiBtn.addEventListener("click", async () => {
-    state.apiBase = "";
+    state.apiBase = "/api";
     state.monthData = null;
-    await syncDayProfileAndAstro();
+    try {
+      await ensureSourceMonthDataFromSelection();
+      await syncDayProfileAndAstro();
+    } catch (_error) {
+      setStatus("failedFallback", true);
+    }
     renderAll();
   });
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
   --bg: #030305;
@@ -27,7 +27,7 @@ body {
   padding: 0;
   min-height: 100%;
   color: var(--text);
-  font-family: "Outfit", "Segoe UI", sans-serif;
+  font-family: "Outfit", "Noto Sans SC", "Noto Sans TC", "Segoe UI", sans-serif;
   background: var(--bg);
   /* Cyberpunk grid background */
   background-image:
