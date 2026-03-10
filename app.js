@@ -893,6 +893,13 @@ const LUNAR_DAY_ZH = [
   "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十",
 ];
 
+function getSolarTermOnDate(year, month, day) {
+  for (const [termKey, m, d] of SOLAR_TERM_APPROX) {
+    if (m === month && d === day) return solarTermLabelForCurrentLanguage(termKey);
+  }
+  return null;
+}
+
 function sourceDayLabel(sourcePayload) {
   if (sourcePayload.lunar_day !== undefined) {
     const isZh = state.language === "zh-CN" || state.language === "zh-TW";
@@ -1236,7 +1243,13 @@ function renderCalendarGridGregorian() {
     const secondary = document.createElement("div");
     secondary.className = "day-primary";
     secondary.style.fontSize = "16px";
-    secondary.textContent = dayNumber(date, "chinese");
+    const solarTerm = getSolarTermOnDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    if (solarTerm) {
+      secondary.textContent = solarTerm;
+      secondary.classList.add("solar-term-label");
+    } else {
+      secondary.textContent = dayNumber(date, "chinese");
+    }
 
     cell.appendChild(primary);
     cell.appendChild(secondary);
@@ -1287,7 +1300,13 @@ function renderCalendarGridSourceMonth() {
     const secondary = document.createElement("div");
     secondary.className = "day-primary";
     secondary.style.fontSize = "16px";
-    secondary.textContent = sourceDayLabel(dayEntry.source_payload); // Lunar Day (e.g. 初一)
+    const solarTerm = getSolarTermOnDate(dayEntry.gregorian.year, dayEntry.gregorian.month, dayEntry.gregorian.day);
+    if (solarTerm) {
+      secondary.textContent = solarTerm;
+      secondary.classList.add("solar-term-label");
+    } else {
+      secondary.textContent = sourceDayLabel(dayEntry.source_payload);
+    }
 
     cell.appendChild(primary);
     cell.appendChild(secondary);

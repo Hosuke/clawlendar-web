@@ -451,6 +451,12 @@ input[type="text"]:focus {
   opacity: 0.3;
 }
 
+.solar-term-label {
+  color: var(--gold) !important;
+  font-weight: 500;
+  text-shadow: 0 0 6px var(--gold-glow);
+}
+
 .day-cell.today {
   border-color: var(--cyan);
   background: rgba(0, 240, 255, 0.08);
