@@ -1700,6 +1700,7 @@ function initStarfield() {
         y: Math.random() * canvas.height,
         z: 0.2 + Math.random() * 1.3,
         twinkle: Math.random() * Math.PI * 2,
+        isCyan: Math.random() > 0.5,
       });
     }
   }
@@ -1715,8 +1716,8 @@ function initStarfield() {
       }
       const alpha = 0.24 + (Math.sin(star.twinkle + time * 0.001) + 1) * 0.36;
       ctx.beginPath();
-      ctx.fillStyle = `rgba(210, 222, 255, ${Math.min(alpha, 0.9)})`;
-      ctx.arc(star.x, star.y, star.z * 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = star.isCyan ? `rgba(0, 240, 255, ${Math.min(alpha, 0.9)})` : `rgba(182, 166, 255, ${Math.min(alpha, 0.9)})`;
+      ctx.arc(star.x, star.y, Math.pow(star.z, 1.2), 0, Math.PI * 2);
       ctx.fill();
     }
     requestAnimationFrame(draw);
