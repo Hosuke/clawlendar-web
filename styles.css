@@ -1,0 +1,434 @@
+:root {
+  --bg: #090b14;
+  --bg-soft: #121726;
+  --panel: rgba(16, 20, 33, 0.78);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --text: #f2f3f8;
+  --text-soft: #a8b0cc;
+  --gold: #f4c26d;
+  --cyan: #69d5ff;
+  --violet: #b6a6ff;
+  --mint: #66ffc8;
+  --danger: #ff8975;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  color: var(--text);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 18% 20%, #1d2340 0, #090b14 42%);
+}
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(1220px, 94vw);
+  margin: 20px auto 44px;
+  display: grid;
+  gap: 14px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 46px rgba(2, 6, 20, 0.42);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.topbar h1 {
+  margin: 4px 0 4px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 58ch;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.links {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.links a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.controls {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.control-item {
+  display: grid;
+  gap: 6px;
+}
+
+.control-item.wide {
+  grid-column: span 2;
+}
+
+label {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+select,
+input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  padding: 10px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 14px;
+}
+
+.calendar-panel,
+.side-panel {
+  padding: 14px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 34px);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.calendar-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.calendar-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.solid-btn,
+.ghost-btn {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.solid-btn {
+  border: 1px solid transparent;
+  color: #02040c;
+  background: linear-gradient(125deg, var(--gold), #ffe0a8);
+}
+
+.ghost-btn {
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.weekday-row,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.weekday-row {
+  margin-top: 14px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 700;
+  padding: 4px;
+}
+
+.day-cell {
+  min-height: 88px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 8px;
+  display: grid;
+  align-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.day-cell:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.day-cell.other-month {
+  opacity: 0.52;
+}
+
+.day-cell.today {
+  border-color: rgba(105, 213, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(105, 213, 255, 0.45);
+}
+
+.day-cell.selected {
+  border-color: rgba(244, 194, 109, 0.95);
+  box-shadow: 0 0 0 1px rgba(244, 194, 109, 0.5);
+}
+
+.day-primary {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.day-secondary {
+  font-size: 11px;
+  color: var(--text-soft);
+}
+
+.side-panel h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.meta-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sidebar-filters {
+  margin-bottom: 10px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.05);
+  display: grid;
+  gap: 6px;
+}
+
+.sidebar-filters p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+}
+
+.sidebar-filters label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sidebar-filters input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.meta-item {
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.meta-item b {
+  display: block;
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.time-controls {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.hour-label {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.astro-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.status-text {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.status-text.error {
+  color: var(--danger);
+}
+
+.zodiac-wheel {
+  min-height: 350px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  background: radial-gradient(circle at 50% 40%, #1f2744 0%, #0f1322 64%);
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.zodiac-wheel svg {
+  width: 100%;
+  height: 100%;
+}
+
+.json-output {
+  margin: 0;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  min-height: 150px;
+  max-height: 240px;
+  overflow: auto;
+  background: rgba(2, 4, 11, 0.72);
+  padding: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #d6dbf2;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.json-output.compact {
+  min-height: 90px;
+  max-height: 180px;
+}
+
+.explain {
+  padding: 14px;
+}
+
+.explain h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.explain ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .control-item.wide {
+    grid-column: span 2;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .control-item.wide {
+    grid-column: span 1;
+  }
+
+  .day-cell {
+    min-height: 74px;
+    padding: 6px;
+  }
+
+  .day-primary {
+    font-size: 16px;
+  }
+}
