@@ -65,7 +65,7 @@ class ConvertRequest(BaseModel):
     locale: str = "en"
 
 
-@app.get("/")
+@app.get("/api")
 def read_root():
     return {
         "status": "online",
@@ -73,13 +73,13 @@ def read_root():
         "message": "Clawlendar FastAPI is successfully spinning in the cloud."
     }
 
-@app.get("/capabilities")
+@app.get("/api/capabilities")
 def api_capabilities():
     """List all supported calendars and their schemas."""
     return run_capabilities(REGISTRY, WARNINGS)
 
 
-@app.post("/timeline")
+@app.post("/api/timeline")
 def api_timeline(req: TimelineRequest):
     """Normalize an instant and project it into multiple calendar systems."""
     try:
@@ -97,7 +97,7 @@ def api_timeline(req: TimelineRequest):
     except Exception as e:
          raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/day-profile")
+@app.post("/api/day-profile")
 def api_day_profile(req: DayProfileRequest):
     """Return day-level profile: details, astrophysics, and metaphysics."""
     try:
@@ -117,7 +117,7 @@ def api_day_profile(req: DayProfileRequest):
          raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/astro")
+@app.post("/api/astro")
 def api_astro_snapshot(req: AstroSnapshotRequest):
     """Return an astro/astronomical snapshot for governors and remainders."""
     try:
@@ -134,7 +134,7 @@ def api_astro_snapshot(req: AstroSnapshotRequest):
          raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/calendar-month")
+@app.post("/api/calendar-month")
 def api_calendar_month(req: CalendarMonthRequest):
     """Return true month boundaries and day list for the selected source calendar."""
     try:
@@ -149,7 +149,7 @@ def api_calendar_month(req: CalendarMonthRequest):
     except Exception as e:
          raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/convert")
+@app.post("/api/convert")
 def api_convert(req: ConvertRequest):
     """Convert a date from one calendar system to one or more target calendars."""
     try:
