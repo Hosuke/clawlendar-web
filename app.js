@@ -372,10 +372,10 @@ const ASPECT_COLORS = {
 };
 
 const state = {
-  language: "en",
-  calendar: "gregory",
-  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
-  monthMode: "gregorian_grid",
+  language: "zh-CN",
+  calendar: "chinese",
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Shanghai",
+  monthMode: "source_month",
   viewYear: new Date().getFullYear(),
   viewMonth: new Date().getMonth(),
   selectedDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12, 0, 0),
@@ -1198,17 +1198,19 @@ function renderCalendarGridGregorian() {
     const cell = document.createElement("button");
     cell.type = "button";
     cell.className = "day-cell";
+    cell.classList.add("day-cell");
     if (date.getMonth() !== state.viewMonth) cell.classList.add("other-month");
     if (sameDate(date, today)) cell.classList.add("today");
     if (sameDate(date, state.selectedDate)) cell.classList.add("selected");
 
     const primary = document.createElement("div");
-    primary.className = "day-primary";
-    primary.textContent = dayNumber(date, state.calendar);
+    primary.className = "day-secondary";
+    primary.textContent = dayNumber(date, "gregory");
 
     const secondary = document.createElement("div");
-    secondary.className = "day-secondary";
-    secondary.textContent = dayNumber(date, "gregory");
+    secondary.className = "day-primary";
+    secondary.style.fontSize = "16px";
+    secondary.textContent = dayNumber(date, "chinese");
 
     cell.appendChild(primary);
     cell.appendChild(secondary);
@@ -1248,17 +1250,18 @@ function renderCalendarGridSourceMonth() {
     const date = formatGregorianDateFromPayload(dayEntry.gregorian);
     const cell = document.createElement("button");
     cell.type = "button";
-    cell.className = "day-cell";
+    cell.className = "day-cell window-view";
     if (sameDate(date, today)) cell.classList.add("today");
     if (sameDate(date, state.selectedDate)) cell.classList.add("selected");
 
     const primary = document.createElement("div");
-    primary.className = "day-primary";
-    primary.textContent = sourceDayLabel(dayEntry.source_payload);
+    primary.className = "day-secondary"; // swap size: secondary logic
+    primary.textContent = `${dayEntry.gregorian.day}`; // Gregorian Day
 
     const secondary = document.createElement("div");
-    secondary.className = "day-secondary";
-    secondary.textContent = `${dayEntry.gregorian.month}/${dayEntry.gregorian.day}`;
+    secondary.className = "day-primary";
+    secondary.style.fontSize = "16px";
+    secondary.textContent = sourceDayLabel(dayEntry.source_payload); // Lunar Day (e.g. 初一)
 
     cell.appendChild(primary);
     cell.appendChild(secondary);
