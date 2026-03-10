@@ -1,0 +1,10 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+clawlendar = {version = "==0.3.0", extras = ["api", "lunar", "extra-calendars", "metaphysics"]}
+
+[requires]
+python_version = "3.12"
