@@ -142,6 +142,24 @@ body::after {
   color: var(--cyan);
   font-weight: 700;
   text-shadow: 0 0 10px var(--cyan-glow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.engine-local {
+  color: var(--gold);
+  background: rgba(245, 208, 97, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.engine-api {
+  color: var(--mint);
+  background: rgba(102, 255, 200, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-shadow: 0 0 10px rgba(102, 255, 200, 0.4);
 }
 
 .topbar h1 {
@@ -272,6 +290,49 @@ input:focus {
   letter-spacing: 2px;
   text-transform: uppercase;
 }
+
+.header-selectors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ym-selectors {
+  display: flex;
+  gap: 12px;
+}
+
+.title-select {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--gold);
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: none;
+  text-shadow: 0 0 10px var(--gold-glow);
+  outline: none;
+}
+
+.title-select:focus {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 10px rgba(245, 208, 97, 0.2);
+}
+
+.title-select option {
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: 16px;
+  font-family: "Outfit", sans-serif;
+  font-style: normal;
+}
+
 
 .calendar-actions {
   display: flex;
@@ -410,6 +471,82 @@ input:focus {
   color: var(--text-soft);
   font-family: "JetBrains Mono", monospace;
   letter-spacing: 0.5px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Dashboard Top Panel */
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-date {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#mainDatePrimary {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 0.8;
+  color: var(--cyan);
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.dashboard-date-sub {
+  display: flex;
+  flex-direction: column;
+}
+
+#mainWeekday {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+#mainDateFull {
+  font-size: 13px;
+  color: var(--text-soft);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.time-controls-minimal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.hour-display {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.huangli-blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.huangli-blocks .meta-item {
+  width: 100%;
+}
+
+.huangli-blocks .meta-item b {
+  color: var(--gold);
 }
 
 .side-panel h3 {
@@ -604,17 +741,25 @@ input[type="range"]::-webkit-slider-thumb:hover {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.2));
-  animation: slowSpin 120s linear infinite;
   transform-origin: center;
 }
 
-@keyframes slowSpin {
-  from {
-    transform: rotate(0deg);
+/* Add subtle floating effect instead of crazy spinning */
+.static-wheel svg {
+  animation: floatOrb 6s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translateY(0px);
   }
 
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(-3px);
+  }
+
+  100% {
+    transform: translateY(0px);
   }
 }
 

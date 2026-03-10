@@ -401,10 +401,17 @@ const refs = {
   apiBaseInput: document.getElementById("apiBaseInput"),
   prevMonthBtn: document.getElementById("prevMonthBtn"),
   nextMonthBtn: document.getElementById("nextMonthBtn"),
+  viewYearSelect: document.getElementById("viewYearSelect"),
+  viewMonthSelect: document.getElementById("viewMonthSelect"),
   todayBtn: document.getElementById("todayBtn"),
   resetApiBtn: document.getElementById("resetApiBtn"),
-  monthTitle: document.getElementById("monthTitle"),
   monthSubtitle: document.getElementById("monthSubtitle"),
+
+  // Dashboard Tops
+  mainDatePrimary: document.getElementById("mainDatePrimary"),
+  mainWeekday: document.getElementById("mainWeekday"),
+  mainDateFull: document.getElementById("mainDateFull"),
+  engineStatusIndicator: document.getElementById("engineStatusIndicator"),
   weekdayRow: document.getElementById("weekdayRow"),
   calendarGrid: document.getElementById("calendarGrid"),
   selectedDateMeta: document.getElementById("selectedDateMeta"),
@@ -496,6 +503,12 @@ async function apiPost(path, payload) {
 function setStatus(key, isError = false) {
   refs.astroStatus.textContent = i18n().status[key] || "";
   refs.astroStatus.classList.toggle("error", Boolean(isError));
+}
+
+function updateEngineIndicator() {
+  const isApi = state.apiBase.length > 0;
+  refs.engineStatusIndicator.textContent = isApi ? "REMOTE API" : "LOCAL MODE";
+  refs.engineStatusIndicator.className = isApi ? "engine-api" : "engine-local";
 }
 
 function normalizeDegrees(value) {
@@ -1118,10 +1131,34 @@ function renderMonthModeOptions() {
 }
 
 function renderMonthHeader() {
+  refs.viewYearSelect.innerHTML = "";
+  refs.viewMonthSelect.innerHTML = "";
+
+  // Year selector 1900 - 2100
+  for (let y = 1900; y <= 2100; y++) {
+    const opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    opt.selected = y === state.viewYear;
+    refs.viewYearSelect.appendChild(opt);
+  }
+
+  // Month selector
+  for (let m = 0; m < 12; m++) {
+    const opt = document.createElement("option");
+    opt.value = m;
+    const anchor = new Date(2026, m, 15);
+    opt.textContent = new Intl.DateTimeFormat(formatLocaleWithCalendar(state.language, state.calendar), {
+      month: "long",
+      timeZone: state.timezone
+    }).format(anchor);
+    opt.selected = m === state.viewMonth;
+    refs.viewMonthSelect.appendChild(opt);
+  }
+
   if (state.monthMode === "source_month" && state.monthData) {
     const source = CALENDAR_TO_SOURCE[state.calendar] || "source";
     const payload = state.monthData.month_payload || {};
-    refs.monthTitle.textContent = `${getCalendarLabel(state.calendar)} • ${JSON.stringify(payload)}`;
     const start = state.monthData?.range_gregorian?.start;
     const end = state.monthData?.range_gregorian?.end;
     refs.monthSubtitle.textContent = start && end ? `${start.year}-${start.month}-${start.day} → ${end.year}-${end.month}-${end.day} (${source})` : source;
@@ -1129,11 +1166,6 @@ function renderMonthHeader() {
   }
 
   const anchor = new Date(state.viewYear, state.viewMonth, 15, 12, 0, 0);
-  refs.monthTitle.textContent = new Intl.DateTimeFormat(formatLocaleWithCalendar(state.language, state.calendar), {
-    year: "numeric",
-    month: "long",
-    timeZone: state.timezone,
-  }).format(anchor);
   refs.monthSubtitle.textContent = new Intl.DateTimeFormat(formatLocaleWithCalendar(state.language, "gregory"), {
     year: "numeric",
     month: "long",
@@ -1247,23 +1279,16 @@ function renderCalendarGrid() {
   }
 }
 
-function renderSelectedMeta() {
-  const labels = i18n().labels;
+function updateDashboardDate() {
   const selected = selectedInstantDate();
-  const rows = [
-    { label: labels.isoDate, value: toIsoDate(state.selectedDate) },
-    { label: labels.selectedCalendar, value: fullDate(selected, state.calendar) },
-    { label: labels.gregorianDate, value: fullDate(selected, "gregory") },
-    { label: labels.unixTimestamp, value: `${Math.floor(selected.getTime() / 1000)}` },
-    { label: labels.weekday, value: weekdayName(selected) },
-  ];
-  refs.selectedDateMeta.innerHTML = "";
-  rows.forEach((row) => {
-    const item = document.createElement("div");
-    item.className = "meta-item";
-    item.innerHTML = `<b>${row.label}</b><span>${row.value}</span>`;
-    refs.selectedDateMeta.appendChild(item);
-  });
+  refs.mainDatePrimary.textContent = `${state.selectedDate.getDate()}`.padStart(2, "0");
+  refs.mainWeekday.textContent = weekdayName(selected);
+  refs.mainDateFull.textContent = toIsoDate(state.selectedDate);
+}
+
+function renderSelectedMeta() {
+  updateDashboardDate();
+  // removed old list, now handled strictly by Cards in Day Profile
 }
 
 function renderDayProfileCards() {
@@ -1459,6 +1484,7 @@ function renderAll() {
   renderTimezoneOptions();
   renderMonthModeOptions();
   refs.apiBaseInput.value = state.apiBase;
+  updateEngineIndicator();
 
   renderMonthHeader();
   renderWeekdayRow();
@@ -1613,12 +1639,23 @@ function bindEvents() {
 
   refs.apiBaseInput.addEventListener("change", async (event) => {
     state.apiBase = event.target.value;
+    updateEngineIndicator();
     try {
       await ensureSourceMonthDataFromSelection();
       await syncDayProfileAndAstro();
     } catch (_error) {
       setStatus("failedFallback", true);
     }
+    renderAll();
+  });
+
+  refs.viewYearSelect.addEventListener("change", async (event) => {
+    state.viewYear = Number(event.target.value);
+    renderAll();
+  });
+
+  refs.viewMonthSelect.addEventListener("change", async (event) => {
+    state.viewMonth = Number(event.target.value);
     renderAll();
   });
 

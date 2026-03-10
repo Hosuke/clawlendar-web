@@ -1,128 +1,142 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clawlendar Web | Celestial Calendar Studio</title>
-    <meta
-      name="description"
-      content="Clawlendar Web is a multilingual international calendar and celestial wheel interface for AI-agent workflows."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <canvas id="starfield" aria-hidden="true"></canvas>
 
-    <main class="shell">
-      <header class="panel topbar">
-        <div>
-          <p class="eyebrow">Clawlendar Web</p>
-          <h1 data-i18n="title">Celestial Calendar Studio</h1>
-          <p class="subtitle" data-i18n="subtitle">
-            Timestamp-first calendar + zodiac interface for AI agents and OpenClaw-style tools
-          </p>
-        </div>
-        <div class="links">
-          <a href="https://github.com/Hosuke/Clawlendar" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://pypi.org/project/clawlendar/" target="_blank" rel="noreferrer">PyPI</a>
-        </div>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clawlendar Web | Celestial Perpetual Calendar</title>
+  <meta name="description"
+    content="Clawlendar Web is a multilingual international calendar and celestial wheel interface for AI-agent workflows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 
-      <section class="panel controls">
-        <div class="control-item">
-          <label for="languageSelect" data-i18n="language">Language</label>
-          <select id="languageSelect"></select>
-        </div>
-        <div class="control-item">
-          <label for="calendarSelect" data-i18n="calendar">Calendar</label>
-          <select id="calendarSelect"></select>
-        </div>
-        <div class="control-item">
-          <label for="timezoneSelect" data-i18n="timezone">Timezone</label>
-          <select id="timezoneSelect"></select>
-        </div>
-        <div class="control-item">
-          <label for="monthModeSelect" data-i18n="monthMode">Month Mode</label>
-          <select id="monthModeSelect"></select>
-        </div>
-        <div class="control-item wide">
-          <label for="apiBaseInput" data-i18n="apiBase">Clawlendar API Base (optional)</label>
-          <input id="apiBaseInput" type="text" placeholder="https://your-clawlendar-api.example.com" />
-        </div>
-      </section>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
-      <section class="layout">
-        <article class="panel calendar-panel">
-          <div class="calendar-header">
-            <button id="prevMonthBtn" class="ghost-btn" data-i18n-title="prevMonth" aria-label="Previous month">
-              &#8592;
-            </button>
-            <div>
-              <h2 id="monthTitle"></h2>
-              <p id="monthSubtitle"></p>
+  <main class="shell">
+    <header class="panel topbar">
+      <div>
+        <p class="eyebrow">Clawlendar Web / Engine: <span id="engineStatusIndicator" class="engine-local">Local
+            Mode</span></p>
+        <h1 data-i18n="title">Celestial Calendar Studio</h1>
+        <p class="subtitle" data-i18n="subtitle">Timestamp-first perpetual calendar + almanac for professionals and AI
+          workflows.</p>
+      </div>
+      <div class="links">
+        <a href="https://github.com/Hosuke/Clawlendar" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://pypi.org/project/clawlendar/" target="_blank" rel="noreferrer">PyPI</a>
+      </div>
+    </header>
+
+    <!-- Sub-header config tools. Hidden by default but expansible? Or just compact -->
+    <section class="panel controls">
+      <div class="control-item">
+        <label for="languageSelect" data-i18n="language">Language</label>
+        <select id="languageSelect"></select>
+      </div>
+      <div class="control-item">
+        <label for="calendarSelect" data-i18n="calendar">Calendar System</label>
+        <select id="calendarSelect"></select>
+      </div>
+      <div class="control-item">
+        <label for="timezoneSelect" data-i18n="timezone">Timezone</label>
+        <select id="timezoneSelect"></select>
+      </div>
+      <div class="control-item">
+        <label for="monthModeSelect" data-i18n="monthMode">Month Mode</label>
+        <select id="monthModeSelect"></select>
+      </div>
+      <div class="control-item wide">
+        <label for="apiBaseInput" data-i18n="apiBase">Clawlendar API Base (Optional / Vercel: leave empty for /api
+          )</label>
+        <input id="apiBaseInput" type="text" placeholder="/api" />
+      </div>
+    </section>
+
+    <section class="layout">
+      <!-- LEFT: Calendar Grid -->
+      <article class="panel calendar-panel">
+        <div class="calendar-header">
+          <button id="prevMonthBtn" class="ghost-btn" data-i18n-title="prevMonth"
+            aria-label="Previous month">&#8592;</button>
+          <div class="header-selectors">
+            <!-- Replaced Title with Selectors -->
+            <div class="ym-selectors">
+              <select id="viewYearSelect" class="title-select"></select>
+              <select id="viewMonthSelect" class="title-select"></select>
             </div>
-            <button id="nextMonthBtn" class="ghost-btn" data-i18n-title="nextMonth" aria-label="Next month">
-              &#8594;
-            </button>
+            <p id="monthSubtitle"></p>
           </div>
+          <button id="nextMonthBtn" class="ghost-btn" data-i18n-title="nextMonth"
+            aria-label="Next month">&#8594;</button>
+        </div>
 
-          <div class="calendar-actions">
-            <button id="todayBtn" class="solid-btn" data-i18n="today">Today</button>
-            <button id="resetApiBtn" class="ghost-btn" data-i18n="resetApi">Reset API</button>
+        <div class="calendar-actions">
+          <button id="todayBtn" class="solid-btn" data-i18n="today">Today</button>
+          <button id="resetApiBtn" class="ghost-btn" data-i18n="resetApi">Reset API</button>
+        </div>
+
+        <div id="weekdayRow" class="weekday-row"></div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </article>
+
+      <!-- RIGHT: Dashboard (Day Profile, Almanac, Astro Wheel) -->
+      <article class="panel side-panel">
+
+        <div class="dashboard-top">
+          <div class="dashboard-date">
+            <span id="mainDatePrimary">01</span>
+            <div class="dashboard-date-sub">
+              <div id="mainWeekday">Monday</div>
+              <div id="mainDateFull">2026-03-09</div>
+            </div>
           </div>
-
-          <div id="weekdayRow" class="weekday-row"></div>
-          <div id="calendarGrid" class="calendar-grid"></div>
-        </article>
-
-        <article class="panel side-panel">
-          <h3 data-i18n="selectedDate">Selected Date</h3>
-          <div id="selectedDateMeta" class="meta-list"></div>
-
-          <h3 data-i18n="dayProfile">Day Details</h3>
-          <div class="sidebar-filters">
-            <p data-i18n="sidebarFilters">Sidebar Modules</p>
-            <label><input id="sidebarLegacyToggle" type="checkbox" checked /> <span data-i18n="legacyDetails">Legacy Details</span></label>
-            <label><input id="sidebarEasternToggle" type="checkbox" checked /> <span data-i18n="easternMetaphysics">Eastern Almanac</span></label>
-            <label><input id="sidebarWesternToggle" type="checkbox" checked /> <span data-i18n="westernMetaphysics">Western Almanac</span></label>
-            <label><input id="sidebarRawJsonToggle" type="checkbox" checked /> <span data-i18n="rawJson">Raw JSON</span></label>
-          </div>
-          <div id="dayProfileCards" class="meta-list"></div>
-          <pre id="dayProfileOutput" class="json-output compact">{}</pre>
-
-          <h3 data-i18n="astroClock">Cosmic Clock</h3>
-          <div class="time-controls">
-            <label for="hourSlider" data-i18n="hour">Hour</label>
+          <div class="time-controls-minimal">
+            <label for="hourSlider" data-i18n="hour" style="display:none;">Hour</label>
+            <div class="hour-display">
+              <span id="hourLabel" class="hour-label">12:00</span>
+            </div>
             <input id="hourSlider" type="range" min="0" max="23" step="1" />
-            <div id="hourLabel" class="hour-label">12:00</div>
           </div>
+        </div>
 
-          <div class="astro-actions">
-            <button id="fetchAstroBtn" class="solid-btn" data-i18n="fetchAstro">Update Cosmic Snapshot</button>
-            <span id="astroStatus" class="status-text"></span>
-          </div>
+        <h3 data-i18n="dayProfile">Day Profile & Almanac</h3>
 
-          <div id="zodiacWheel" class="zodiac-wheel"></div>
-          <pre id="astroOutput" class="json-output">{}</pre>
-        </article>
-      </section>
+        <div class="sidebar-filters">
+          <label><input id="sidebarLegacyToggle" type="checkbox" checked /> <span data-i18n="legacyDetails">Standard
+              Details</span></label>
+          <label><input id="sidebarEasternToggle" type="checkbox" checked /> <span
+              data-i18n="easternMetaphysics">Eastern Almanac (Huangli & Bazi)</span></label>
+          <label><input id="sidebarWesternToggle" type="checkbox" checked /> <span
+              data-i18n="westernMetaphysics">Western Astrological</span></label>
+          <label><input id="sidebarRawJsonToggle" type="checkbox" /> <span data-i18n="rawJson">Raw Developer
+              JSON</span></label>
+        </div>
 
-      <section class="panel explain">
-        <h3 data-i18n="howItWorks">How it works</h3>
-        <ol>
-          <li data-i18n="flow1">The monthly grid uses real Gregorian month boundaries.</li>
-          <li data-i18n="flow2">Selected date projects into international calendars via Intl calendar formatting.</li>
-          <li data-i18n="flow3">For cosmic layers, it calls /astro (or local approximation fallback) to render zodiac markers.</li>
-        </ol>
-      </section>
-    </main>
+        <!-- The detailed Cards / Huangli View -->
+        <div id="dayProfileCards" class="meta-list huangli-blocks"></div>
+        <pre id="dayProfileOutput" class="json-output compact" style="display:none;"></pre>
 
-    <script type="module" src="./app.js"></script>
-  </body>
+        <h3 data-i18n="astroClock">Astro Map (Cosmic Map)</h3>
+        <!-- Make the spin static for beauty via CSS -->
+        <div id="zodiacWheel" class="zodiac-wheel static-wheel"></div>
+
+        <div class="astro-actions">
+          <button id="fetchAstroBtn" class="ghost-btn" style="display:none;">Update Sync</button>
+          <span id="astroStatus" class="status-text"></span>
+        </div>
+        <pre id="astroOutput" class="json-output" style="display:none;"></pre>
+
+      </article>
+    </section>
+
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+
 </html>
