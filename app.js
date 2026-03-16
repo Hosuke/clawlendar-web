@@ -607,6 +607,15 @@ const ASPECT_COLORS = {
   opposition: "rgba(255, 219, 123, 0.5)",
 };
 
+const MOON_PHASE_EMOJI = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
+const MOON_PHASE_LABELS = {
+  en: ["New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous", "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"],
+  "zh-CN": ["新月", "娥眉月", "上弦月", "盈凸月", "满月", "亏凸月", "下弦月", "残月"],
+  "zh-TW": ["新月", "娥眉月", "上弦月", "盈凸月", "滿月", "虧凸月", "下弦月", "殘月"],
+  ja: ["新月", "三日月", "上弦", "十三夜月", "満月", "寝待月", "下弦", "有明月"],
+  ar: ["محاق", "هلال متزايد", "التربيع الأول", "أحدب متزايد", "بدر", "أحدب متناقص", "التربيع الأخير", "هلال متناقص"],
+};
+
 const state = {
   language: "zh-CN",
   calendar: "chinese",
@@ -650,6 +659,7 @@ const refs = {
   mainDatePrimary: document.getElementById("mainDatePrimary"),
   mainWeekday: document.getElementById("mainWeekday"),
   mainDateFull: document.getElementById("mainDateFull"),
+  moonPhaseBadge: document.getElementById("moonPhaseBadge"),
   engineStatusIndicator: document.getElementById("engineStatusIndicator"),
   weekdayRow: document.getElementById("weekdayRow"),
   calendarGrid: document.getElementById("calendarGrid"),
@@ -745,6 +755,124 @@ function selectedLocalDateTimeString() {
   const d = `${selected.getDate()}`.padStart(2, "0");
   const h = `${selected.getHours()}`.padStart(2, "0");
   return `${y}-${m}-${d}T${h}:00:00`;
+}
+
+function moonPhaseLabelByIndex(index) {
+  const labels = MOON_PHASE_LABELS[state.language] || MOON_PHASE_LABELS.en;
+  return labels[index] || MOON_PHASE_LABELS.en[index] || "";
+}
+
+function moonPhaseInfoFromFraction(fraction) {
+  const normalized = ((fraction % 1) + 1) % 1;
+  const index = Math.floor((normalized * 8) + 0.5) % 8;
+  return {
+    index,
+    fraction: normalized,
+    emoji: MOON_PHASE_EMOJI[index],
+    label: moonPhaseLabelByIndex(index),
+  };
+}
+
+function computeMoonPhaseInfo(date) {
+  const synodicMonth = 29.530588853;
+  const knownNewMoonUtcMs = Date.UTC(2000, 0, 6, 18, 14, 0);
+  const dayMs = 24 * 60 * 60 * 1000;
+  const elapsedDays = (date.getTime() - knownNewMoonUtcMs) / dayMs;
+  const cycleDays = ((elapsedDays % synodicMonth) + synodicMonth) % synodicMonth;
+  const fraction = cycleDays / synodicMonth;
+  return moonPhaseInfoFromFraction(fraction);
+}
+
+function moonEmojiFromLabel(label) {
+  if (!label || typeof label !== "string") return null;
+  const value = label.toLowerCase().replace(/_/g, " ");
+  if (value.includes("new") || value.includes("新月") || value.includes("朔") || value.includes("محاق")) return "🌑";
+  if (value.includes("waning crescent") || value.includes("残月") || value.includes("殘月") || value.includes("هلال متناقص")) return "🌘";
+  if (value.includes("waxing crescent") || value.includes("三日月") || value.includes("娥眉") || value.includes("峨眉") || value.includes("هلال متزايد")) return "🌒";
+  if (value.includes("first quarter") || value.includes("上弦") || value.includes("التربيع الأول")) return "🌓";
+  if (value.includes("waxing gibbous") || value.includes("盈凸") || value.includes("أحدب متزايد")) return "🌔";
+  if (value.includes("full") || value.includes("满月") || value.includes("滿月") || value.includes("望") || value.includes("بدر")) return "🌕";
+  if (value.includes("waning gibbous") || value.includes("亏凸") || value.includes("虧凸") || value.includes("أحدب متناقص")) return "🌖";
+  if (value.includes("last quarter") || value.includes("third quarter") || value.includes("下弦") || value.includes("التربيع الأخير")) return "🌗";
+  return null;
+}
+
+function currentMoonPhaseInfo() {
+  const fallback = computeMoonPhaseInfo(selectedInstantDate());
+  const western = state.dayProfile?.metaphysics?.western || {};
+  const moonPhase = western?.moon_phase || {};
+  const label = typeof moonPhase?.label === "string" ? moonPhase.label.trim() : "";
+  const directFraction = Number(
+    moonPhase?.fraction
+    ?? moonPhase?.phase_fraction
+    ?? moonPhase?.phase
+    ?? moonPhase?.illumination
+  );
+  if (Number.isFinite(directFraction)) {
+    const fromFraction = moonPhaseInfoFromFraction(directFraction);
+    return {
+      emoji: moonEmojiFromLabel(label) || fromFraction.emoji,
+      label: label || fromFraction.label,
+    };
+  }
+  return {
+    emoji: moonEmojiFromLabel(label) || fallback.emoji,
+    label: label || fallback.label,
+  };
+}
+
+function weatherVisualModeFromWeather(weather) {
+  if (!weather) return "clear";
+  const code = Number(weather.weather_code);
+  const label = `${weather.weather_label || ""}`.toLowerCase();
+  const hasCode = Number.isFinite(code);
+
+  const isStorm = label.includes("thunder") || (hasCode && [95, 96, 99].includes(code));
+  if (isStorm) return "storm";
+
+  const isSnow = label.includes("snow") || (hasCode && [71, 73, 75, 77, 85, 86].includes(code));
+  if (isSnow) return "snow";
+
+  const isRain = label.includes("rain")
+    || label.includes("drizzle")
+    || label.includes("shower")
+    || (hasCode && [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code));
+  if (isRain) return "rain";
+
+  const isFog = label.includes("fog") || (hasCode && [45, 48].includes(code));
+  if (isFog) return "fog";
+
+  const isCloudy = label.includes("cloud")
+    || label.includes("overcast")
+    || label.includes("partly")
+    || (hasCode && [1, 2, 3].includes(code));
+  if (isCloudy) return "cloudy";
+
+  return "clear";
+}
+
+function currentWeatherVisualMode() {
+  const fromWeatherNow = state.weatherNow?.weather;
+  if (fromWeatherNow) return weatherVisualModeFromWeather(fromWeatherNow);
+  const fromLifeContext = state.lifeContext?.environment?.weather;
+  if (fromLifeContext) return weatherVisualModeFromWeather(fromLifeContext);
+  return "clear";
+}
+
+function applyWeatherVisualMode() {
+  const mode = currentWeatherVisualMode();
+  document.body.setAttribute("data-weather-mode", mode);
+  const opacityByMode = {
+    clear: 0.62,
+    cloudy: 0.42,
+    fog: 0.32,
+    rain: 0.34,
+    snow: 0.48,
+    storm: 0.24,
+  };
+  if (refs.starfield) {
+    refs.starfield.style.opacity = `${opacityByMode[mode] ?? 0.6}`;
+  }
 }
 
 function normalizeLifeConfig(config) {
@@ -1887,6 +2015,12 @@ function updateDashboardDate() {
   refs.mainDatePrimary.textContent = `${state.selectedDate.getDate()}`.padStart(2, "0");
   refs.mainWeekday.textContent = weekdayName(selected);
   refs.mainDateFull.textContent = toIsoDate(state.selectedDate);
+  if (refs.moonPhaseBadge) {
+    const moon = currentMoonPhaseInfo();
+    refs.moonPhaseBadge.textContent = moon.emoji;
+    refs.moonPhaseBadge.setAttribute("title", `${i18n().labels.moonPhase}: ${moon.label}`);
+    refs.moonPhaseBadge.setAttribute("aria-label", `${i18n().labels.moonPhase}: ${moon.label}`);
+  }
 }
 
 function renderSelectedMeta() {
@@ -1963,9 +2097,8 @@ function renderDayProfileCards() {
 
   if (showWestern) {
     const western = metaphysics?.western || {};
-    if (western?.moon_phase?.label) {
-      cards.push({ label: labels.moonPhase, value: western.moon_phase.label });
-    }
+    const moonInfo = currentMoonPhaseInfo();
+    cards.push({ label: labels.moonPhase, value: `${moonInfo.emoji} ${moonInfo.label}`.trim() });
     if (western?.sun_sign) {
       cards.push({ label: labels.sunSign, value: western.sun_sign });
     }
@@ -2230,6 +2363,7 @@ function renderAll() {
   renderLifeControls();
   renderLifeContextCards();
   renderWeatherNowCards();
+  applyWeatherVisualMode();
   renderHour();
   renderAstro();
 

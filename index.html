@@ -12,11 +12,18 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=7" />
+  <link rel="stylesheet" href="./styles.css?v=8" />
 </head>
 
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
+  <div id="weatherFx" aria-hidden="true">
+    <div class="weather-layer clouds"></div>
+    <div class="weather-layer rain"></div>
+    <div class="weather-layer snow"></div>
+    <div class="weather-layer fog"></div>
+    <div class="weather-layer lightning"></div>
+  </div>
 
   <main class="shell">
     <header class="panel topbar">
@@ -94,7 +101,10 @@
             <span id="mainDatePrimary">01</span>
             <div class="dashboard-date-sub">
               <div id="mainWeekday">Monday</div>
-              <div id="mainDateFull">2026-03-09</div>
+              <div class="dashboard-meta-line">
+                <span id="mainDateFull">2026-03-09</span>
+                <span id="moonPhaseBadge" class="moon-phase-badge" title="Moon phase">🌑</span>
+              </div>
             </div>
           </div>
           <div class="time-controls-minimal">
@@ -211,7 +221,7 @@
     </section>
 
   </main>
-  <script type="module" src="./app.js?v=7"></script>
+  <script type="module" src="./app.js?v=8"></script>
 </body>
 
 </html>
