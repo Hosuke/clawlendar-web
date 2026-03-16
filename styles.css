@@ -831,6 +831,37 @@ input[type="datetime-local"]:focus {
   flex-wrap: wrap;
 }
 
+.scene-snapshot-panel {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scene-snapshot-header {
+  margin-bottom: 10px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.scene-snapshot-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 10px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+
+.scene-snapshot-controls label {
+  grid-column: span 2;
+  font-size: 10px;
+}
+
+.scene-snapshot-controls input[type="datetime-local"] {
+  min-height: 40px;
+}
+
 .sidebar-filters {
   margin-bottom: 16px;
   padding: 12px;
@@ -1127,5 +1158,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
   .life-context-actions {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .scene-snapshot-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .scene-snapshot-controls label {
+    grid-column: span 1;
   }
 }

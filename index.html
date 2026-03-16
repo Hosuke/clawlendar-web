@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=8" />
+  <link rel="stylesheet" href="./styles.css?v=9" />
 </head>
 
 <body>
@@ -216,12 +216,26 @@
           <span id="weatherStatus" class="status-text"></span>
           <div id="weatherNowCards" class="meta-list"></div>
           <pre id="weatherNowOutput" class="json-output compact" style="display:none;"></pre>
+
+          <div class="scene-snapshot-panel">
+            <div class="scene-snapshot-header">
+              <b data-i18n="spacetimeSnapshot">Spacetime Snapshot</b>
+            </div>
+            <div class="scene-snapshot-controls">
+              <label for="sceneDateTimeInput" data-i18n="snapshotTime">Snapshot Time</label>
+              <input id="sceneDateTimeInput" type="datetime-local" />
+              <button id="fetchSceneBtn" class="ghost-btn" data-i18n="reconstructScene">Reconstruct Scene</button>
+            </div>
+            <span id="sceneStatus" class="status-text"></span>
+            <div id="sceneSnapshotCards" class="meta-list"></div>
+            <pre id="sceneSnapshotOutput" class="json-output compact" style="display:none;"></pre>
+          </div>
         </section>
       </article>
     </section>
 
   </main>
-  <script type="module" src="./app.js?v=8"></script>
+  <script type="module" src="./app.js?v=9"></script>
 </body>
 
 </html>

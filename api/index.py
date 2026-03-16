@@ -15,8 +15,9 @@ from clawlendar.bridge import (
 )
 
 try:
-    from clawlendar.bridge import run_weather_at_time, run_weather_now
+    from clawlendar.bridge import run_spacetime_snapshot, run_weather_at_time, run_weather_now
 except ImportError:  # Backward compatibility with older clawlendar builds.
+    run_spacetime_snapshot = None
     run_weather_at_time = None
     run_weather_now = None
 
@@ -95,6 +96,19 @@ class WeatherAtTimeRequest(BaseModel):
     location_payload: Dict[str, Any]
     timezone: str = "UTC"
     locale: str = "en"
+
+
+class SpacetimeSnapshotRequest(BaseModel):
+    input_payload: Dict[str, Any]
+    timezone: str = "UTC"
+    date_basis: str = "local"
+    location_payload: Optional[Dict[str, Any]] = None
+    subject_payload: Optional[Dict[str, Any]] = None
+    targets: Optional[List[str]] = None
+    locale: str = "en"
+    include_astro: bool = True
+    include_metaphysics: bool = True
+    include_weather: bool = True
 
 
 @app.get("/api")
@@ -254,6 +268,34 @@ def api_weather_at_time(req: WeatherAtTimeRequest):
             location_payload=req.location_payload,
             timezone_name=req.timezone,
             locale=req.locale,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/spacetime-snapshot")
+def api_spacetime_snapshot(req: SpacetimeSnapshotRequest):
+    """Return one-call spacetime context: timeline + day profile + weather + scene prompt."""
+    if run_spacetime_snapshot is None:
+        raise HTTPException(status_code=501, detail="spacetime-snapshot requires newer clawlendar backend package")
+    if req.date_basis not in {"local", "utc"}:
+        raise HTTPException(status_code=400, detail="date_basis must be 'local' or 'utc'")
+    try:
+        return run_spacetime_snapshot(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            input_payload=req.input_payload,
+            timezone_name=req.timezone,
+            date_basis=req.date_basis,
+            location_payload=req.location_payload,
+            subject_payload=req.subject_payload,
+            targets=req.targets,
+            locale=req.locale,
+            include_astro=req.include_astro,
+            include_metaphysics=req.include_metaphysics,
+            include_weather=req.include_weather,
         )
     except CalendarError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
