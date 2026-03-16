@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=4" />
+  <link rel="stylesheet" href="./styles.css?v=5" />
 </head>
 
 <body>
@@ -123,6 +123,63 @@
         <div id="dayProfileCards" class="meta-list huangli-blocks"></div>
         <pre id="dayProfileOutput" class="json-output compact" style="display:none;"></pre>
 
+        <h3 data-i18n="lifeContext">Life Context</h3>
+        <section class="life-context-panel">
+          <div class="life-context-controls">
+            <div class="control-item">
+              <label for="birthInput" data-i18n="birthTime">Birth Time</label>
+              <input id="birthInput" type="datetime-local" />
+            </div>
+            <div class="control-item">
+              <label for="entityIdInput" data-i18n="entityId">Entity ID</label>
+              <input id="entityIdInput" type="text" placeholder="lobster-001" />
+            </div>
+            <div class="control-item">
+              <label for="roleInput" data-i18n="role">Role</label>
+              <input id="roleInput" type="text" placeholder="digital lifeform" />
+            </div>
+            <div class="control-item">
+              <label for="soulInput" data-i18n="soul">Soul Traits</label>
+              <input id="soulInput" type="text" placeholder="continuity-first and adaptive" />
+            </div>
+            <div class="control-item">
+              <label for="locationInput" data-i18n="location">Location</label>
+              <input id="locationInput" type="text" placeholder="Taipei City" />
+            </div>
+            <div class="control-item split">
+              <div>
+                <label for="latitudeInput" data-i18n="latitude">Latitude</label>
+                <input id="latitudeInput" type="text" placeholder="25.0330" />
+              </div>
+              <div>
+                <label for="longitudeInput" data-i18n="longitude">Longitude</label>
+                <input id="longitudeInput" type="text" placeholder="121.5654" />
+              </div>
+            </div>
+            <div class="control-item">
+              <label for="backgroundInput" data-i18n="background">Background</label>
+              <input id="backgroundInput" type="text" placeholder="city night walk" />
+            </div>
+            <div class="control-item">
+              <label for="climateInput" data-i18n="climate">Climate</label>
+              <input id="climateInput" type="text" placeholder="humid subtropical" />
+            </div>
+            <div class="control-item wide">
+              <label for="sceneryInput" data-i18n="scenery">Scenery Note</label>
+              <input id="sceneryInput" type="text" placeholder="street lights and river reflections" />
+            </div>
+          </div>
+          <div class="life-context-actions">
+            <label class="life-checkbox">
+              <input id="autoWeatherToggle" type="checkbox" checked />
+              <span data-i18n="autoWeather">Auto Weather</span>
+            </label>
+            <button id="refreshLifeBtn" class="ghost-btn" data-i18n="refreshLife">Update Context</button>
+          </div>
+          <div id="lifeContextCards" class="meta-list life-context-cards"></div>
+          <pre id="lifeContextOutput" class="json-output compact" style="display:none;"></pre>
+        </section>
+
         <h3 data-i18n="astroClock">Astro Map (Cosmic Map)</h3>
         <!-- Make the spin static for beauty via CSS -->
         <div id="zodiacWheel" class="zodiac-wheel static-wheel"></div>
@@ -137,7 +194,7 @@
     </section>
 
   </main>
-  <script type="module" src="./app.js?v=4"></script>
+  <script type="module" src="./app.js?v=5"></script>
 </body>
 
 </html>

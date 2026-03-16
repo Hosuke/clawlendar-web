@@ -17,11 +17,18 @@ This project is designed for deployment on **Vercel** and focuses on:
 - Internationalized UI (`English`, `Simplified Chinese`, `Traditional Chinese`, `Japanese`, `Arabic`)
 - Timezone switching
 - Zodiac wheel visualization (seven governors + major aspects)
+- Planetary glyph rendering (☉☽☿♀♂♃♄) and Four Remainders glyphs (☊☋⚸)
 - Day details sidebar (solar term / sexagenary / lunar profile)
 - Day details sidebar (solar term / sexagenary / lunar profile / Bazi / Huangli / moon phase)
+- Life context panel (birth -> now timeline, role/space anchors, weather-aware world prompt)
 - Optional live fetch from Clawlendar API:
   - `/day-profile`
   - `/calendar-month`
+  - `/life-context`
+
+## Live demo
+
+- [clawlendar-web.vercel.app](https://clawlendar-web.vercel.app/)
 
 ## Live Architecture
 
@@ -88,5 +95,6 @@ vercel --prod
 - Calendar rendering uses browser `Intl.DateTimeFormat` calendar support.
 - Exact availability depends on browser runtime.
 - Cosmic wheel and day details can run on local approximation, but for canonical agent pipelines use API `/day-profile` and `/calendar-month`.
+- `life_context` supports birth/now continuity + optional weather enrichment (needs API and latitude/longitude for best results).
 - When connected to latest Clawlendar API, frontend forwards `locale` (`zh-CN` / `zh-TW`) so solar term and sexagenary labels are returned in the selected Chinese variant.
 - Latest `day-profile` also returns `metaphysics` block (Eastern + Western), used for Bazi and almanac cards in sidebar.

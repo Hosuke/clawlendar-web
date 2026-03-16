@@ -11,8 +11,21 @@ const UI_TEXT = {
     resetApi: "Reset API",
     selectedDate: "Selected Date",
     dayProfile: "Day Details",
+    lifeContext: "Life Context",
     astroClock: "Cosmic Clock",
     hour: "Hour",
+    birthTime: "Birth Time",
+    entityId: "Entity ID",
+    role: "Role",
+    soul: "Soul Traits",
+    location: "Location",
+    latitude: "Latitude",
+    longitude: "Longitude",
+    background: "Background",
+    climate: "Climate",
+    scenery: "Scenery Note",
+    autoWeather: "Auto Weather",
+    refreshLife: "Update Context",
     fetchAstro: "Update Snapshot",
     howItWorks: "How it works",
     flow1: "Monthly view supports both Gregorian grid and true source-calendar month boundaries.",
@@ -40,6 +53,17 @@ const UI_TEXT = {
       moonPhase: "Moon Phase",
       sunSign: "Sun Sign",
       moonSign: "Moon Sign",
+      lifeId: "Life ID",
+      age: "Age",
+      stage: "Stage",
+      birthday: "Birthday",
+      nextBirthday: "Next Birthday",
+      birthInstant: "Birth Instant",
+      nowInstant: "Current Instant",
+      place: "Place",
+      weather: "Weather",
+      scenePrompt: "Scene Prompt",
+      seedBrief: "Seed Brief",
     },
     sidebarFilters: "Sidebar Modules",
     legacyDetails: "Legacy Details",
@@ -69,8 +93,21 @@ const UI_TEXT = {
     resetApi: "清除 API",
     selectedDate: "已選日期",
     dayProfile: "當日詳情",
+    lifeContext: "時空脈絡",
     astroClock: "星辰時鐘",
     hour: "小時",
+    birthTime: "生命起始時間",
+    entityId: "實體 ID",
+    role: "角色",
+    soul: "靈魂特質",
+    location: "地點",
+    latitude: "緯度",
+    longitude: "經度",
+    background: "背景",
+    climate: "氣候",
+    scenery: "景象描述",
+    autoWeather: "自動天氣",
+    refreshLife: "更新脈絡",
     fetchAstro: "更新快照",
     howItWorks: "運作方式",
     flow1: "月份檢視同時支援公曆格線與來源曆法真實月邊界。",
@@ -98,6 +135,17 @@ const UI_TEXT = {
       moonPhase: "月相",
       sunSign: "太陽星座",
       moonSign: "月亮星座",
+      lifeId: "生命 ID",
+      age: "已存活",
+      stage: "階段",
+      birthday: "生日",
+      nextBirthday: "下次生日",
+      birthInstant: "生命起始",
+      nowInstant: "目前時間",
+      place: "地點",
+      weather: "天氣",
+      scenePrompt: "場景提示",
+      seedBrief: "連續性摘要",
     },
     sidebarFilters: "側欄模組",
     legacyDetails: "原本日期細節",
@@ -127,8 +175,21 @@ const UI_TEXT = {
     resetApi: "清除 API",
     selectedDate: "已选日期",
     dayProfile: "当日详情",
+    lifeContext: "时空脉络",
     astroClock: "星辰时钟",
     hour: "小时",
+    birthTime: "生命起始时间",
+    entityId: "实体 ID",
+    role: "角色",
+    soul: "灵魂特质",
+    location: "地点",
+    latitude: "纬度",
+    longitude: "经度",
+    background: "背景",
+    climate: "气候",
+    scenery: "景象描述",
+    autoWeather: "自动天气",
+    refreshLife: "更新脉络",
     fetchAstro: "更新快照",
     howItWorks: "运作方式",
     flow1: "月份检视同时支持公历格线与来源历法真实月边界。",
@@ -156,6 +217,17 @@ const UI_TEXT = {
       moonPhase: "月相",
       sunSign: "太阳星座",
       moonSign: "月亮星座",
+      lifeId: "生命 ID",
+      age: "已存活",
+      stage: "阶段",
+      birthday: "生日",
+      nextBirthday: "下次生日",
+      birthInstant: "生命起始",
+      nowInstant: "当前时间",
+      place: "地点",
+      weather: "天气",
+      scenePrompt: "场景提示",
+      seedBrief: "连续性摘要",
     },
     sidebarFilters: "侧栏模块",
     legacyDetails: "原本日期细节",
@@ -185,8 +257,21 @@ const UI_TEXT = {
     resetApi: "APIリセット",
     selectedDate: "選択日",
     dayProfile: "日次プロファイル",
+    lifeContext: "時空コンテキスト",
     astroClock: "星辰クロック",
     hour: "時刻",
+    birthTime: "起点時刻",
+    entityId: "エンティティ ID",
+    role: "役割",
+    soul: "魂の特性",
+    location: "場所",
+    latitude: "緯度",
+    longitude: "経度",
+    background: "背景",
+    climate: "気候",
+    scenery: "景観メモ",
+    autoWeather: "天気を自動取得",
+    refreshLife: "コンテキスト更新",
     fetchAstro: "スナップショット更新",
     howItWorks: "仕組み",
     flow1: "月表示は通常グリッドと実際の暦月境界を切り替え可能。",
@@ -214,6 +299,17 @@ const UI_TEXT = {
       moonPhase: "月相",
       sunSign: "太陽星座",
       moonSign: "月星座",
+      lifeId: "ライフ ID",
+      age: "経過時間",
+      stage: "段階",
+      birthday: "誕生日",
+      nextBirthday: "次の誕生日",
+      birthInstant: "起点時刻",
+      nowInstant: "現在時刻",
+      place: "場所",
+      weather: "天気",
+      scenePrompt: "シーンプロンプト",
+      seedBrief: "連続性サマリー",
     },
     sidebarFilters: "サイドバー表示",
     legacyDetails: "従来の日次詳細",
@@ -243,8 +339,21 @@ const UI_TEXT = {
     resetApi: "إعادة ضبط API",
     selectedDate: "التاريخ المحدد",
     dayProfile: "تفاصيل اليوم",
+    lifeContext: "سياق الزمان والمكان",
     astroClock: "الساعة الفلكية",
     hour: "الساعة",
+    birthTime: "وقت البداية",
+    entityId: "معرّف الكيان",
+    role: "الدور",
+    soul: "سمات الروح",
+    location: "الموقع",
+    latitude: "خط العرض",
+    longitude: "خط الطول",
+    background: "الخلفية",
+    climate: "المناخ",
+    scenery: "وصف المشهد",
+    autoWeather: "طقس تلقائي",
+    refreshLife: "تحديث السياق",
     fetchAstro: "تحديث اللقطة",
     howItWorks: "كيف يعمل",
     flow1: "يمكن عرض الشهر كشبكة غريغورية أو حدود شهر حقيقية للتقويم المختار.",
@@ -272,6 +381,17 @@ const UI_TEXT = {
       moonPhase: "طور القمر",
       sunSign: "برج الشمس",
       moonSign: "برج القمر",
+      lifeId: "معرّف الحياة",
+      age: "العمر",
+      stage: "المرحلة",
+      birthday: "يوم الميلاد",
+      nextBirthday: "الميلاد القادم",
+      birthInstant: "لحظة البداية",
+      nowInstant: "اللحظة الحالية",
+      place: "المكان",
+      weather: "الطقس",
+      scenePrompt: "وصف المشهد",
+      seedBrief: "ملخص الاستمرارية",
     },
     sidebarFilters: "وحدات الشريط الجانبي",
     legacyDetails: "التفاصيل الأصلية",
@@ -336,7 +456,21 @@ const TIMEZONES = [
 ];
 
 const WEEK_START_BY_LANGUAGE = { en: 0, "zh-CN": 1, "zh-TW": 1, ja: 0, ar: 6 };
-const STORAGE_KEY = "clawlendar-web-state-v3";
+const STORAGE_KEY = "clawlendar-web-state-v4";
+const DEFAULT_BIRTH_INPUT = "2000-01-01T00:00";
+const DEFAULT_LIFE_CONFIG = {
+  birthLocalDatetime: DEFAULT_BIRTH_INPUT,
+  entityId: "lobster-001",
+  role: "digital lifeform",
+  soul: "continuity-first and adaptive",
+  locationName: "",
+  latitude: "",
+  longitude: "",
+  background: "",
+  climate: "",
+  sceneryNote: "",
+  autoWeather: true,
+};
 
 const ZODIAC_SIGNS = [
   { name: "aries", symbol: "♈" },
@@ -354,13 +488,20 @@ const ZODIAC_SIGNS = [
 ];
 
 const BODY_STYLE = {
-  sun: { color: "#f4c26d", short: "Su" },
-  moon: { color: "#d5dcff", short: "Mo" },
-  mercury: { color: "#95f7ef", short: "Me" },
-  venus: { color: "#ff9bd7", short: "Ve" },
-  mars: { color: "#ff8d8d", short: "Ma" },
-  jupiter: { color: "#ffc68f", short: "Ju" },
-  saturn: { color: "#efe7a0", short: "Sa" },
+  sun: { color: "#f4c26d", short: "Su", symbol: "☉" },
+  moon: { color: "#d5dcff", short: "Mo", symbol: "☽" },
+  mercury: { color: "#95f7ef", short: "Me", symbol: "☿" },
+  venus: { color: "#ff9bd7", short: "Ve", symbol: "♀" },
+  mars: { color: "#ff8d8d", short: "Ma", symbol: "♂" },
+  jupiter: { color: "#ffc68f", short: "Ju", symbol: "♃" },
+  saturn: { color: "#efe7a0", short: "Sa", symbol: "♄" },
+};
+
+const REMAINDER_SYMBOLS = {
+  ascending_node: "☊",
+  descending_node: "☋",
+  lunar_apogee_mean: "⚸",
+  earth_perihelion: "⊕",
 };
 
 const ASPECT_COLORS = {
@@ -383,7 +524,9 @@ const state = {
   apiBase: "/api",
   astroSnapshot: null,
   dayProfile: null,
+  lifeContext: null,
   monthData: null,
+  lifeConfig: { ...DEFAULT_LIFE_CONFIG },
   sidebarModules: {
     legacy: true,
     eastern: true,
@@ -417,6 +560,20 @@ const refs = {
   selectedDateMeta: document.getElementById("selectedDateMeta"),
   dayProfileCards: document.getElementById("dayProfileCards"),
   dayProfileOutput: document.getElementById("dayProfileOutput"),
+  birthInput: document.getElementById("birthInput"),
+  entityIdInput: document.getElementById("entityIdInput"),
+  roleInput: document.getElementById("roleInput"),
+  soulInput: document.getElementById("soulInput"),
+  locationInput: document.getElementById("locationInput"),
+  latitudeInput: document.getElementById("latitudeInput"),
+  longitudeInput: document.getElementById("longitudeInput"),
+  backgroundInput: document.getElementById("backgroundInput"),
+  climateInput: document.getElementById("climateInput"),
+  sceneryInput: document.getElementById("sceneryInput"),
+  autoWeatherToggle: document.getElementById("autoWeatherToggle"),
+  refreshLifeBtn: document.getElementById("refreshLifeBtn"),
+  lifeContextCards: document.getElementById("lifeContextCards"),
+  lifeContextOutput: document.getElementById("lifeContextOutput"),
   sidebarLegacyToggle: document.getElementById("sidebarLegacyToggle"),
   sidebarEasternToggle: document.getElementById("sidebarEasternToggle"),
   sidebarWesternToggle: document.getElementById("sidebarWesternToggle"),
@@ -469,6 +626,218 @@ function selectedInstantDate() {
     0,
     0
   );
+}
+
+function toDateTimeLocalValue(date) {
+  const y = date.getFullYear();
+  const m = `${date.getMonth() + 1}`.padStart(2, "0");
+  const d = `${date.getDate()}`.padStart(2, "0");
+  const h = `${date.getHours()}`.padStart(2, "0");
+  const min = `${date.getMinutes()}`.padStart(2, "0");
+  return `${y}-${m}-${d}T${h}:${min}`;
+}
+
+function selectedLocalDateTimeString() {
+  const selected = selectedInstantDate();
+  const y = selected.getFullYear();
+  const m = `${selected.getMonth() + 1}`.padStart(2, "0");
+  const d = `${selected.getDate()}`.padStart(2, "0");
+  const h = `${selected.getHours()}`.padStart(2, "0");
+  return `${y}-${m}-${d}T${h}:00:00`;
+}
+
+function normalizeLifeConfig(config) {
+  return {
+    birthLocalDatetime: (config.birthLocalDatetime || DEFAULT_BIRTH_INPUT).trim(),
+    entityId: (config.entityId || "").trim(),
+    role: (config.role || "").trim(),
+    soul: (config.soul || "").trim(),
+    locationName: (config.locationName || "").trim(),
+    latitude: `${config.latitude ?? ""}`.trim(),
+    longitude: `${config.longitude ?? ""}`.trim(),
+    background: (config.background || "").trim(),
+    climate: (config.climate || "").trim(),
+    sceneryNote: (config.sceneryNote || "").trim(),
+    autoWeather: config.autoWeather !== false,
+  };
+}
+
+function parseOptionalNumber(value) {
+  if (value === "") return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function buildLifeContextRequestPayload() {
+  const config = normalizeLifeConfig(state.lifeConfig);
+  const spacePayload = {};
+  const subjectPayload = {};
+
+  if (config.locationName) spacePayload.location_name = config.locationName;
+  if (config.background) spacePayload.background = config.background;
+  if (config.climate) spacePayload.climate = config.climate;
+  if (config.sceneryNote) spacePayload.scenery_note = config.sceneryNote;
+  const lat = parseOptionalNumber(config.latitude);
+  const lon = parseOptionalNumber(config.longitude);
+  if (lat !== null) spacePayload.latitude = lat;
+  if (lon !== null) spacePayload.longitude = lon;
+
+  if (config.entityId) subjectPayload.entity_id = config.entityId;
+  if (config.role) subjectPayload.role = config.role;
+  if (config.soul) subjectPayload.soul = config.soul;
+
+  return {
+    birth_input_payload: { local_datetime: `${config.birthLocalDatetime}:00` },
+    now_input_payload: { local_datetime: selectedLocalDateTimeString() },
+    timezone: state.timezone,
+    date_basis: "local",
+    space_payload: Object.keys(spacePayload).length > 0 ? spacePayload : null,
+    subject_payload: Object.keys(subjectPayload).length > 0 ? subjectPayload : null,
+    locale: backendLocaleForLanguage(state.language),
+    auto_weather: config.autoWeather,
+  };
+}
+
+function formatIsoLocal(date) {
+  const y = date.getFullYear();
+  const m = `${date.getMonth() + 1}`.padStart(2, "0");
+  const d = `${date.getDate()}`.padStart(2, "0");
+  const h = `${date.getHours()}`.padStart(2, "0");
+  const min = `${date.getMinutes()}`.padStart(2, "0");
+  const s = `${date.getSeconds()}`.padStart(2, "0");
+  const offset = -date.getTimezoneOffset();
+  const sign = offset >= 0 ? "+" : "-";
+  const absOffset = Math.abs(offset);
+  const oh = `${Math.floor(absOffset / 60)}`.padStart(2, "0");
+  const om = `${absOffset % 60}`.padStart(2, "0");
+  return `${y}-${m}-${d}T${h}:${min}:${s}${sign}${oh}:${om}`;
+}
+
+function formatAgeReadable(seconds) {
+  const day = 86400;
+  const hour = 3600;
+  const minute = 60;
+  const days = Math.floor(seconds / day);
+  const hours = Math.floor((seconds % day) / hour);
+  const minutes = Math.floor((seconds % hour) / minute);
+  return `${days}d ${hours}h ${minutes}m`;
+}
+
+function lifeStageFromAgeDays(ageDays) {
+  if (ageDays < 30) return "newborn";
+  if (ageDays < 365) return "juvenile";
+  if (ageDays < 3650) return "young";
+  if (ageDays < 7300) return "adult";
+  return "elder";
+}
+
+function localBirthdayProfile(birthDate, nowDate) {
+  const month = birthDate.getMonth() + 1;
+  const day = birthDate.getDate();
+  const todayKey = `${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
+  const isToday = todayKey === `${month}-${day}`;
+
+  let yearsElapsed = nowDate.getFullYear() - birthDate.getFullYear();
+  if (
+    nowDate.getMonth() < birthDate.getMonth()
+    || (nowDate.getMonth() === birthDate.getMonth() && nowDate.getDate() < birthDate.getDate())
+  ) {
+    yearsElapsed -= 1;
+  }
+  if (yearsElapsed < 0) yearsElapsed = 0;
+
+  let nextBirthday = new Date(nowDate.getFullYear(), birthDate.getMonth(), birthDate.getDate(), 12, 0, 0);
+  if (nextBirthday < new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 12, 0, 0)) {
+    nextBirthday = new Date(nowDate.getFullYear() + 1, birthDate.getMonth(), birthDate.getDate(), 12, 0, 0);
+  }
+  const dayMs = 24 * 60 * 60 * 1000;
+  const startNow = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 12, 0, 0).getTime();
+  const daysUntil = Math.round((nextBirthday.getTime() - startNow) / dayMs);
+
+  return {
+    month,
+    day,
+    is_today: isToday,
+    years_elapsed: yearsElapsed,
+    next_birthday_date_local: toIsoDate(nextBirthday),
+    days_until_next_birthday: daysUntil,
+  };
+}
+
+function computeLocalLifeContext() {
+  const normalized = normalizeLifeConfig(state.lifeConfig);
+  const now = selectedInstantDate();
+  const parsedBirth = new Date(`${normalized.birthLocalDatetime}:00`);
+  const birth = Number.isNaN(parsedBirth.getTime()) ? new Date(`${DEFAULT_BIRTH_INPUT}:00`) : parsedBirth;
+  const safeNow = now.getTime() < birth.getTime() ? new Date(birth.getTime()) : now;
+  const ageSeconds = Math.max(0, Math.floor((safeNow.getTime() - birth.getTime()) / 1000));
+  const ageDays = ageSeconds / 86400;
+  const role = normalized.role || "digital lifeform";
+  const soul = normalized.soul || "continuity-first and adaptive";
+  const locationName = normalized.locationName || "unanchored-space";
+  const lifeId = normalized.entityId || `LIFE-${Math.floor(birth.getTime() / 1000)}`;
+  const seedBrief = `${role} @ ${locationName} | stage=${lifeStageFromAgeDays(ageDays)} | age=${formatAgeReadable(ageSeconds)} | soul=${soul}`;
+
+  const weatherNote = normalized.autoWeather ? "Weather requires API + provider." : "Auto weather disabled.";
+  return {
+    command: "life_context",
+    source: "local_approximation",
+    timezone: state.timezone,
+    date_basis: "local",
+    locale: backendLocaleForLanguage(state.language),
+    life: {
+      life_id: lifeId,
+      birth_instant: {
+        timestamp: birth.getTime() / 1000,
+        timestamp_ms: birth.getTime(),
+        iso_utc: birth.toISOString(),
+        iso_local: formatIsoLocal(birth),
+      },
+      now_instant: {
+        timestamp: safeNow.getTime() / 1000,
+        timestamp_ms: safeNow.getTime(),
+        iso_utc: safeNow.toISOString(),
+        iso_local: formatIsoLocal(safeNow),
+      },
+      age: {
+        seconds: ageSeconds,
+        minutes: Number((ageSeconds / 60).toFixed(3)),
+        hours: Number((ageSeconds / 3600).toFixed(3)),
+        days: Number(ageDays.toFixed(6)),
+        readable: formatAgeReadable(ageSeconds),
+        stage: lifeStageFromAgeDays(ageDays),
+      },
+      birthday: localBirthdayProfile(birth, safeNow),
+      continuity: {
+        birth_before_now: safeNow.getTime() >= birth.getTime(),
+        tick_timestamp: Math.floor(safeNow.getTime() / 1000),
+        seed_brief: seedBrief,
+      },
+    },
+    space: {
+      location_name: normalized.locationName || null,
+      latitude: parseOptionalNumber(normalized.latitude),
+      longitude: parseOptionalNumber(normalized.longitude),
+      background: normalized.background || null,
+      climate: normalized.climate || null,
+      scenery_note: normalized.sceneryNote || null,
+    },
+    environment: {
+      climate: normalized.climate || null,
+      weather_note: weatherNote,
+      scenery_note: normalized.sceneryNote || null,
+      weather: null,
+    },
+    subject: {
+      entity_id: normalized.entityId || null,
+      role: normalized.role || null,
+      soul: normalized.soul || null,
+    },
+    world_context: {
+      scene_prompt: `At local time ${formatIsoLocal(safeNow)}, in ${locationName}, continue the life timeline of ${role} with stable memory continuity.`,
+    },
+    warnings: ["Local life_context approximation without API weather enrichment."],
+  };
 }
 
 function parseApiBase(raw) {
@@ -653,14 +1022,35 @@ function computeLocalAstroSnapshot() {
     },
     seven_governors: Object.keys(BODY_STYLE).map((name) => ({
       name,
+      symbol: BODY_STYLE[name]?.symbol || null,
       longitude_deg: raw[name].longitude_deg,
       zodiac_sign: raw[name].zodiac_sign,
     })),
     four_remainders: [
-      { name: "ascending_node", longitude_deg: Number(ascNode.toFixed(6)), zodiac_sign: zodiacSignFromLongitude(ascNode).name },
-      { name: "descending_node", longitude_deg: Number(descNode.toFixed(6)), zodiac_sign: zodiacSignFromLongitude(descNode).name },
-      { name: "lunar_apogee_mean", longitude_deg: Number(lunarApogee.toFixed(6)), zodiac_sign: zodiacSignFromLongitude(lunarApogee).name },
-      { name: "earth_perihelion", longitude_deg: Number(earthPerihelion.toFixed(6)), zodiac_sign: zodiacSignFromLongitude(earthPerihelion).name },
+      {
+        name: "ascending_node",
+        symbol: REMAINDER_SYMBOLS.ascending_node,
+        longitude_deg: Number(ascNode.toFixed(6)),
+        zodiac_sign: zodiacSignFromLongitude(ascNode).name,
+      },
+      {
+        name: "descending_node",
+        symbol: REMAINDER_SYMBOLS.descending_node,
+        longitude_deg: Number(descNode.toFixed(6)),
+        zodiac_sign: zodiacSignFromLongitude(descNode).name,
+      },
+      {
+        name: "lunar_apogee_mean",
+        symbol: REMAINDER_SYMBOLS.lunar_apogee_mean,
+        longitude_deg: Number(lunarApogee.toFixed(6)),
+        zodiac_sign: zodiacSignFromLongitude(lunarApogee).name,
+      },
+      {
+        name: "earth_perihelion",
+        symbol: REMAINDER_SYMBOLS.earth_perihelion,
+        longitude_deg: Number(earthPerihelion.toFixed(6)),
+        zodiac_sign: zodiacSignFromLongitude(earthPerihelion).name,
+      },
     ],
     major_aspects: majorAspects(points),
     raw_positions: raw,
@@ -1002,20 +1392,30 @@ async function syncDayProfileAndAstro() {
   if (!normalized) {
     state.dayProfile = computeLocalDayProfile();
     state.astroSnapshot = computeLocalAstroSnapshot();
+    state.lifeContext = computeLocalLifeContext();
     setStatus("localApprox");
     return;
   }
 
   setStatus("fetching");
   try {
-    const profile = await apiPost("/day-profile", {
-      input_payload: { local_datetime: `${isoDate}T${hour}:00:00` },
-      timezone: state.timezone,
-      date_basis: "local",
-      include_astro: true,
-      include_metaphysics: true,
-      locale: backendLocaleForLanguage(state.language),
-    });
+    const [profileResult, lifeContextResult] = await Promise.allSettled([
+      apiPost("/day-profile", {
+        input_payload: { local_datetime: `${isoDate}T${hour}:00:00` },
+        timezone: state.timezone,
+        date_basis: "local",
+        include_astro: true,
+        include_metaphysics: true,
+        locale: backendLocaleForLanguage(state.language),
+      }),
+      apiPost("/life-context", buildLifeContextRequestPayload()),
+    ]);
+
+    if (profileResult.status !== "fulfilled") {
+      throw profileResult.reason;
+    }
+
+    const profile = profileResult.value;
     state.dayProfile = profile;
     state.astroSnapshot = {
       command: "astro_snapshot",
@@ -1025,10 +1425,14 @@ async function syncDayProfileAndAstro() {
       major_aspects: profile?.astro?.major_aspects || [],
       warnings: profile?.warnings || [],
     };
+    state.lifeContext = lifeContextResult.status === "fulfilled"
+      ? lifeContextResult.value
+      : computeLocalLifeContext();
     setStatus("synced");
   } catch (_error) {
     state.dayProfile = computeLocalDayProfile();
     state.astroSnapshot = computeLocalAstroSnapshot();
+    state.lifeContext = computeLocalLifeContext();
     setStatus("failedFallback", true);
   }
 }
@@ -1437,6 +1841,74 @@ function renderDayProfileCards() {
   }
 }
 
+function renderLifeControls() {
+  if (!refs.birthInput) return;
+  const config = normalizeLifeConfig(state.lifeConfig);
+  refs.birthInput.value = config.birthLocalDatetime;
+  refs.entityIdInput.value = config.entityId;
+  refs.roleInput.value = config.role;
+  refs.soulInput.value = config.soul;
+  refs.locationInput.value = config.locationName;
+  refs.latitudeInput.value = config.latitude;
+  refs.longitudeInput.value = config.longitude;
+  refs.backgroundInput.value = config.background;
+  refs.climateInput.value = config.climate;
+  refs.sceneryInput.value = config.sceneryNote;
+  refs.autoWeatherToggle.checked = Boolean(config.autoWeather);
+}
+
+function renderLifeContextCards() {
+  const labels = i18n().labels;
+  const context = state.lifeContext || computeLocalLifeContext();
+  const life = context?.life || {};
+  const birthday = life?.birthday || {};
+  const placeName = context?.environment?.place?.location_name
+    || context?.space?.location_name
+    || "N/A";
+  const weather = context?.environment?.weather || null;
+  const weatherSummary = weather
+    ? [weather.weather_label, weather.temperature_c !== undefined ? `${weather.temperature_c}C` : null].filter(Boolean).join(" | ")
+    : (context?.environment?.weather_note || "N/A");
+
+  const cards = [
+    { label: labels.lifeId, value: life.life_id || "N/A" },
+    { label: labels.age, value: life?.age?.readable || "N/A" },
+    { label: labels.stage, value: life?.age?.stage || "N/A" },
+    { label: labels.birthday, value: birthday.month && birthday.day ? `${birthday.month}/${birthday.day}` : "N/A" },
+    {
+      label: labels.nextBirthday,
+      value: birthday.next_birthday_date_local
+        ? `${birthday.next_birthday_date_local}${birthday.days_until_next_birthday !== undefined ? ` (${birthday.days_until_next_birthday}d)` : ""}`
+        : "N/A",
+    },
+    { label: labels.birthInstant, value: life?.birth_instant?.iso_local || "N/A" },
+    { label: labels.nowInstant, value: life?.now_instant?.iso_local || "N/A" },
+    { label: labels.place, value: placeName },
+    { label: labels.weather, value: weatherSummary },
+    { label: labels.seedBrief, value: life?.continuity?.seed_brief || "N/A" },
+    { label: labels.scenePrompt, value: context?.world_context?.scene_prompt || "N/A" },
+  ];
+
+  refs.lifeContextCards.innerHTML = "";
+  cards.forEach((card) => {
+    const item = document.createElement("div");
+    item.className = "meta-item";
+    const labelNode = document.createElement("b");
+    labelNode.textContent = card.label;
+    const valueNode = document.createElement("span");
+    valueNode.textContent = card.value;
+    item.appendChild(labelNode);
+    item.appendChild(valueNode);
+    refs.lifeContextCards.appendChild(item);
+  });
+
+  const showRawJson = Boolean(state.sidebarModules.rawJson);
+  refs.lifeContextOutput.style.display = showRawJson ? "block" : "none";
+  if (showRawJson) {
+    refs.lifeContextOutput.textContent = JSON.stringify(context, null, 2);
+  }
+}
+
 function pointOnCircle(center, radius, longitudeDeg) {
   const angle = ((longitudeDeg - 90) * Math.PI) / 180;
   return { x: center + radius * Math.cos(angle), y: center + radius * Math.sin(angle) };
@@ -1450,6 +1922,7 @@ function renderZodiacWheel(snapshot) {
   const markerRadius = 94;
 
   const governors = snapshot?.seven_governors || [];
+  const remainders = snapshot?.four_remainders || [];
   const aspects = snapshot?.major_aspects || [];
   const sectorLines = [];
   const signLabels = [];
@@ -1480,13 +1953,27 @@ function renderZodiacWheel(snapshot) {
 
   const markers = governors
     .map((body) => {
-      const style = BODY_STYLE[body.name] || { color: "#fff", short: body.name.slice(0, 2) };
+      const style = BODY_STYLE[body.name] || { color: "#fff", short: body.name.slice(0, 2), symbol: body.name.slice(0, 2) };
+      const markerLabel = body.symbol || style.symbol || style.short;
+      const markerFontSize = /^[A-Za-z]{1,2}$/.test(markerLabel) ? 10 : 14;
       const p = pointOnCircle(center, markerRadius, body.longitude_deg);
       const textPoint = pointOnCircle(center, markerRadius - 18, body.longitude_deg);
       return `
       <g>
         <circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${style.color}" />
-        <text x="${textPoint.x}" y="${textPoint.y}" text-anchor="middle" dominant-baseline="middle" fill="${style.color}" font-size="10" font-weight="700">${style.short}</text>
+        <text x="${textPoint.x}" y="${textPoint.y}" text-anchor="middle" dominant-baseline="middle" fill="${style.color}" font-size="${markerFontSize}" font-weight="700">${markerLabel}</text>
+      </g>`;
+    })
+    .join("\n");
+
+  const remainderMarkers = remainders
+    .map((body) => {
+      const symbol = body.symbol || REMAINDER_SYMBOLS[body.name] || "•";
+      const p = pointOnCircle(center, markerRadius - 26, body.longitude_deg);
+      return `
+      <g>
+        <circle cx="${p.x}" cy="${p.y}" r="3.4" fill="rgba(160, 255, 240, 0.9)" />
+        <text x="${p.x}" y="${p.y - 10}" text-anchor="middle" dominant-baseline="middle" fill="rgba(160, 255, 240, 0.95)" font-size="11" font-weight="700">${symbol}</text>
       </g>`;
     })
     .join("\n");
@@ -1506,6 +1993,7 @@ function renderZodiacWheel(snapshot) {
       ${signLabels.join("\n")}
       ${aspectLines}
       ${markers}
+      ${remainderMarkers}
       <circle cx="${center}" cy="${center}" r="4" fill="#f2f3f8" />
     </svg>
   `;
@@ -1539,6 +2027,8 @@ function renderAll() {
   renderCalendarGrid();
   renderSelectedMeta();
   renderDayProfileCards();
+  renderLifeControls();
+  renderLifeContextCards();
   renderHour();
   renderAstro();
 
@@ -1556,6 +2046,7 @@ function saveState() {
     selectedDate: toIsoDate(state.selectedDate),
     selectedHour: state.selectedHour,
     apiBase: state.apiBase,
+    lifeConfig: normalizeLifeConfig(state.lifeConfig),
     sidebarModules: state.sidebarModules,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -1580,6 +2071,13 @@ function loadState() {
       state.selectedHour = payload.selectedHour;
     }
     if (typeof payload.apiBase === "string") state.apiBase = payload.apiBase || "/api";
+    if (payload.lifeConfig && typeof payload.lifeConfig === "object") {
+      state.lifeConfig = {
+        ...DEFAULT_LIFE_CONFIG,
+        ...payload.lifeConfig,
+        autoWeather: payload.lifeConfig.autoWeather !== false,
+      };
+    }
     if (payload.sidebarModules && typeof payload.sidebarModules === "object") {
       state.sidebarModules = {
         legacy: payload.sidebarModules.legacy !== false,
@@ -1763,6 +2261,46 @@ function bindEvents() {
     renderAll();
   });
 
+  const bindLifeField = (refName, key) => {
+    const node = refs[refName];
+    if (!node) return;
+    node.addEventListener("change", () => {
+      state.lifeConfig[key] = node.value;
+      state.lifeContext = computeLocalLifeContext();
+      renderAll();
+    });
+  };
+
+  bindLifeField("birthInput", "birthLocalDatetime");
+  bindLifeField("entityIdInput", "entityId");
+  bindLifeField("roleInput", "role");
+  bindLifeField("soulInput", "soul");
+  bindLifeField("locationInput", "locationName");
+  bindLifeField("latitudeInput", "latitude");
+  bindLifeField("longitudeInput", "longitude");
+  bindLifeField("backgroundInput", "background");
+  bindLifeField("climateInput", "climate");
+  bindLifeField("sceneryInput", "sceneryNote");
+
+  if (refs.autoWeatherToggle) {
+    refs.autoWeatherToggle.addEventListener("change", () => {
+      state.lifeConfig.autoWeather = Boolean(refs.autoWeatherToggle.checked);
+      state.lifeContext = computeLocalLifeContext();
+      renderAll();
+    });
+  }
+
+  if (refs.refreshLifeBtn) {
+    refs.refreshLifeBtn.addEventListener("click", async () => {
+      try {
+        await syncDayProfileAndAstro();
+      } catch (_error) {
+        setStatus("failedFallback", true);
+      }
+      renderAll();
+    });
+  }
+
   bindSidebarToggle("sidebarLegacyToggle", "legacy");
   bindSidebarToggle("sidebarEasternToggle", "eastern");
   bindSidebarToggle("sidebarWesternToggle", "western");
@@ -1833,6 +2371,7 @@ async function bootstrap() {
   } catch (_error) {
     state.dayProfile = computeLocalDayProfile();
     state.astroSnapshot = computeLocalAstroSnapshot();
+    state.lifeContext = computeLocalLifeContext();
     setStatus("failedFallback", true);
   }
   renderAll();

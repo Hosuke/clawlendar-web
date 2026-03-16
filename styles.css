@@ -245,7 +245,8 @@ label {
 }
 
 select,
-input[type="text"] {
+input[type="text"],
+input[type="datetime-local"] {
   width: 100%;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -261,7 +262,8 @@ input[type="text"] {
 }
 
 select:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="datetime-local"]:focus {
   border-color: var(--cyan);
   box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -594,6 +596,74 @@ input[type="text"]:focus {
   margin-bottom: 24px;
 }
 
+.life-context-panel {
+  margin-bottom: 24px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.life-context-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.life-context-controls .control-item {
+  gap: 6px;
+}
+
+.life-context-controls .control-item.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.life-context-controls .control-item.wide {
+  grid-column: span 2;
+}
+
+.life-context-controls label {
+  font-size: 10px;
+}
+
+.life-context-controls input {
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.life-context-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.life-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.life-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cyan);
+}
+
+.life-context-cards {
+  grid-template-columns: 1fr;
+}
+
 .sidebar-filters {
   margin-bottom: 16px;
   padding: 12px;
@@ -869,5 +939,22 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
   .day-primary {
     font-size: 18px;
+  }
+
+  .life-context-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .life-context-controls .control-item.wide {
+    grid-column: span 1;
+  }
+
+  .life-context-controls .control-item.split {
+    grid-template-columns: 1fr;
+  }
+
+  .life-context-actions {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

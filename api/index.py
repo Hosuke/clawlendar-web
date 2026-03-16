@@ -10,6 +10,7 @@ from clawlendar.bridge import (
     run_capabilities,
     run_convert,
     run_day_profile,
+    run_life_context,
     run_timeline,
 )
 
@@ -63,6 +64,18 @@ class ConvertRequest(BaseModel):
     targets: List[str]
     source_payload: Dict[str, Any]
     locale: str = "en"
+
+
+class LifeContextRequest(BaseModel):
+    birth_input_payload: Dict[str, Any]
+    now_input_payload: Optional[Dict[str, Any]] = None
+    timezone: str = "UTC"
+    date_basis: str = "local"
+    space_payload: Optional[Dict[str, Any]] = None
+    subject_payload: Optional[Dict[str, Any]] = None
+    targets: Optional[List[str]] = None
+    locale: str = "en"
+    auto_weather: bool = True
 
 
 @app.get("/api")
@@ -165,3 +178,28 @@ def api_convert(req: ConvertRequest):
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as e:
          raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/life-context")
+def api_life_context(req: LifeContextRequest):
+    """Build continuity-safe life context from birth/now + space/subject anchors."""
+    if req.date_basis not in {"local", "utc"}:
+        raise HTTPException(status_code=400, detail="date_basis must be 'local' or 'utc'")
+    try:
+        return run_life_context(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            birth_input_payload=req.birth_input_payload,
+            now_input_payload=req.now_input_payload,
+            timezone_name=req.timezone,
+            date_basis=req.date_basis,
+            space_payload=req.space_payload,
+            subject_payload=req.subject_payload,
+            targets=req.targets,
+            locale=req.locale,
+            auto_weather=req.auto_weather,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
