@@ -15,6 +15,15 @@
   --violet: #b6a6ff;
   --mint: #66ffc8;
   --danger: #ff2a6d;
+  --daylight-wash-alpha: 0.18;
+  --night-wash-alpha: 0.45;
+  --twilight-alpha: 0.08;
+  --sun-opacity: 0.35;
+  --moon-opacity: 0.22;
+  --sun-x: 50%;
+  --sun-y: 42%;
+  --moon-x: 80%;
+  --moon-y: 30%;
 }
 
 * {
@@ -74,6 +83,66 @@ body::after {
   height: 100%;
   z-index: 0;
   opacity: 0.6;
+}
+
+#daylightFx {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.daylight-layer {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.daylight-layer.base {
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 238, 173, calc(var(--daylight-wash-alpha) * 0.58)) 0 24%, transparent 60%),
+    linear-gradient(
+      to bottom,
+      rgba(90, 149, 212, var(--daylight-wash-alpha)) 0%,
+      rgba(33, 65, 105, calc(var(--daylight-wash-alpha) * 0.7)) 38%,
+      rgba(7, 11, 21, var(--night-wash-alpha)) 100%
+    );
+  mix-blend-mode: screen;
+}
+
+.daylight-layer.twilight {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 166, 95, calc(var(--twilight-alpha) * 0.8)) 0%,
+    rgba(255, 126, 110, var(--twilight-alpha)) 35%,
+    rgba(142, 87, 204, calc(var(--twilight-alpha) * 0.8)) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+.daylight-layer.sun {
+  background: radial-gradient(
+    circle at var(--sun-x) var(--sun-y),
+    rgba(255, 228, 146, calc(var(--sun-opacity) * 0.95)) 0 8%,
+    rgba(255, 195, 94, calc(var(--sun-opacity) * 0.52)) 9%,
+    rgba(255, 173, 83, calc(var(--sun-opacity) * 0.2)) 22%,
+    transparent 48%
+  );
+  filter: blur(10px);
+  mix-blend-mode: screen;
+}
+
+.daylight-layer.moon {
+  background: radial-gradient(
+    circle at var(--moon-x) var(--moon-y),
+    rgba(211, 229, 255, calc(var(--moon-opacity) * 0.9)) 0 6%,
+    rgba(188, 214, 248, calc(var(--moon-opacity) * 0.48)) 8%,
+    rgba(158, 192, 243, calc(var(--moon-opacity) * 0.18)) 20%,
+    transparent 44%
+  );
+  filter: blur(8px);
+  mix-blend-mode: screen;
 }
 
 #weatherFx {

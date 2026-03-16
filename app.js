@@ -913,6 +913,41 @@ function currentWeatherVisualMode() {
 function applyWeatherVisualMode() {
   const mode = currentWeatherVisualMode();
   document.body.setAttribute("data-weather-mode", mode);
+}
+
+function clamp01(value) {
+  if (value < 0) return 0;
+  if (value > 1) return 1;
+  return value;
+}
+
+function applyDaylightCycle() {
+  const hourDecimal = state.selectedHour;
+  const solarAltitude = Math.sin(((hourDecimal - 6) / 12) * Math.PI);
+  const daylight = clamp01((solarAltitude + 0.08) / 1.08);
+  const night = 1 - daylight;
+  const twilight = clamp01(1 - Math.abs(solarAltitude) * 2.15);
+
+  const sunTravel = ((hourDecimal - 6 + 24) % 24) / 24;
+  const sunX = 10 + sunTravel * 80;
+  const sunY = 82 - daylight * 56 + twilight * 6;
+
+  const moonAltitude = clamp01((Math.sin(((hourDecimal - 18) / 12) * Math.PI) + 0.05) / 1.05);
+  const moonTravel = ((hourDecimal - 18 + 24) % 24) / 24;
+  const moonX = 10 + moonTravel * 80;
+  const moonY = 84 - moonAltitude * 58;
+
+  const root = document.documentElement;
+  root.style.setProperty("--daylight-wash-alpha", (0.05 + daylight * 0.38).toFixed(3));
+  root.style.setProperty("--night-wash-alpha", (0.14 + night * 0.58).toFixed(3));
+  root.style.setProperty("--twilight-alpha", (twilight * 0.34).toFixed(3));
+  root.style.setProperty("--sun-opacity", (0.08 + daylight * 0.9).toFixed(3));
+  root.style.setProperty("--moon-opacity", (0.08 + moonAltitude * 0.74).toFixed(3));
+  root.style.setProperty("--sun-x", `${sunX.toFixed(2)}%`);
+  root.style.setProperty("--sun-y", `${sunY.toFixed(2)}%`);
+  root.style.setProperty("--moon-x", `${moonX.toFixed(2)}%`);
+  root.style.setProperty("--moon-y", `${moonY.toFixed(2)}%`);
+
   const opacityByMode = {
     clear: 0.62,
     cloudy: 0.42,
@@ -921,8 +956,11 @@ function applyWeatherVisualMode() {
     snow: 0.48,
     storm: 0.24,
   };
+  const mode = currentWeatherVisualMode();
   if (refs.starfield) {
-    refs.starfield.style.opacity = `${opacityByMode[mode] ?? 0.6}`;
+    const baseOpacity = opacityByMode[mode] ?? 0.6;
+    const nightBoost = 0.82 + night * 0.42;
+    refs.starfield.style.opacity = `${(baseOpacity * nightBoost).toFixed(3)}`;
   }
 }
 
@@ -2551,6 +2589,7 @@ function renderAll() {
   renderWeatherNowCards();
   renderSceneSnapshotCards();
   applyWeatherVisualMode();
+  applyDaylightCycle();
   renderHour();
   renderAstro();
 
@@ -2766,6 +2805,7 @@ function bindEvents() {
     state.selectedHour = Number(event.target.value);
     renderHour();
     renderSelectedMeta();
+    applyDaylightCycle();
   });
 
   refs.hourSlider.addEventListener("change", async () => {
