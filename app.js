@@ -12,6 +12,7 @@ const UI_TEXT = {
     selectedDate: "Selected Date",
     dayProfile: "Day Details",
     lifeContext: "Life Context",
+    weatherNow: "Weather Now",
     astroClock: "Cosmic Clock",
     hour: "Hour",
     birthTime: "Birth Time",
@@ -26,6 +27,8 @@ const UI_TEXT = {
     scenery: "Scenery Note",
     autoWeather: "Auto Weather",
     refreshLife: "Update Context",
+    useMyLocation: "Use My Location",
+    checkWeather: "Check Weather",
     fetchAstro: "Update Snapshot",
     howItWorks: "How it works",
     flow1: "Monthly view supports both Gregorian grid and true source-calendar month boundaries.",
@@ -64,6 +67,13 @@ const UI_TEXT = {
       weather: "Weather",
       scenePrompt: "Scene Prompt",
       seedBrief: "Seed Brief",
+      weatherProvider: "Provider",
+      weatherTime: "Weather Time",
+      weatherDelta: "Time Delta",
+      weatherTemp: "Temperature",
+      weatherWind: "Wind",
+      weatherHumidity: "Humidity",
+      weatherPrecip: "Precipitation",
     },
     sidebarFilters: "Sidebar Modules",
     legacyDetails: "Legacy Details",
@@ -80,6 +90,15 @@ const UI_TEXT = {
       monthUnsupported: "This calendar has no month-mode mapping",
       monthSynced: "Source month synced",
     },
+    weatherStatus: {
+      fetching: "Fetching weather...",
+      synced: "Weather synced",
+      noApi: "Weather API base required",
+      noCoordinates: "Latitude/Longitude required",
+      geoUnsupported: "Browser geolocation is unavailable",
+      geoDenied: "Location permission denied",
+      failed: "Weather request failed",
+    },
   },
   "zh-TW": {
     title: "星曆中控台",
@@ -94,6 +113,7 @@ const UI_TEXT = {
     selectedDate: "已選日期",
     dayProfile: "當日詳情",
     lifeContext: "時空脈絡",
+    weatherNow: "現在天氣",
     astroClock: "星辰時鐘",
     hour: "小時",
     birthTime: "生命起始時間",
@@ -108,6 +128,8 @@ const UI_TEXT = {
     scenery: "景象描述",
     autoWeather: "自動天氣",
     refreshLife: "更新脈絡",
+    useMyLocation: "使用我的位置",
+    checkWeather: "查詢天氣",
     fetchAstro: "更新快照",
     howItWorks: "運作方式",
     flow1: "月份檢視同時支援公曆格線與來源曆法真實月邊界。",
@@ -146,6 +168,13 @@ const UI_TEXT = {
       weather: "天氣",
       scenePrompt: "場景提示",
       seedBrief: "連續性摘要",
+      weatherProvider: "資料來源",
+      weatherTime: "天氣時間",
+      weatherDelta: "時間偏差",
+      weatherTemp: "溫度",
+      weatherWind: "風速",
+      weatherHumidity: "濕度",
+      weatherPrecip: "降水",
     },
     sidebarFilters: "側欄模組",
     legacyDetails: "原本日期細節",
@@ -162,6 +191,15 @@ const UI_TEXT = {
       monthUnsupported: "此曆法沒有對應 month-mode",
       monthSynced: "來源月份已同步",
     },
+    weatherStatus: {
+      fetching: "讀取天氣中...",
+      synced: "天氣已同步",
+      noApi: "需要 API Base 才能查天氣",
+      noCoordinates: "需要緯度/經度",
+      geoUnsupported: "瀏覽器不支援定位",
+      geoDenied: "定位權限被拒絕",
+      failed: "天氣查詢失敗",
+    },
   },
   "zh-CN": {
     title: "星历中控台",
@@ -176,6 +214,7 @@ const UI_TEXT = {
     selectedDate: "已选日期",
     dayProfile: "当日详情",
     lifeContext: "时空脉络",
+    weatherNow: "当前天气",
     astroClock: "星辰时钟",
     hour: "小时",
     birthTime: "生命起始时间",
@@ -190,6 +229,8 @@ const UI_TEXT = {
     scenery: "景象描述",
     autoWeather: "自动天气",
     refreshLife: "更新脉络",
+    useMyLocation: "使用我的位置",
+    checkWeather: "查询天气",
     fetchAstro: "更新快照",
     howItWorks: "运作方式",
     flow1: "月份检视同时支持公历格线与来源历法真实月边界。",
@@ -228,6 +269,13 @@ const UI_TEXT = {
       weather: "天气",
       scenePrompt: "场景提示",
       seedBrief: "连续性摘要",
+      weatherProvider: "数据来源",
+      weatherTime: "天气时间",
+      weatherDelta: "时间偏差",
+      weatherTemp: "温度",
+      weatherWind: "风速",
+      weatherHumidity: "湿度",
+      weatherPrecip: "降水",
     },
     sidebarFilters: "侧栏模块",
     legacyDetails: "原本日期细节",
@@ -244,6 +292,15 @@ const UI_TEXT = {
       monthUnsupported: "此历法没有对应 month-mode",
       monthSynced: "来源月份已同步",
     },
+    weatherStatus: {
+      fetching: "读取天气中...",
+      synced: "天气已同步",
+      noApi: "需要 API Base 才能查天气",
+      noCoordinates: "需要纬度/经度",
+      geoUnsupported: "浏览器不支持定位",
+      geoDenied: "定位权限被拒绝",
+      failed: "天气查询失败",
+    },
   },
   ja: {
     title: "星暦スタジオ",
@@ -258,6 +315,7 @@ const UI_TEXT = {
     selectedDate: "選択日",
     dayProfile: "日次プロファイル",
     lifeContext: "時空コンテキスト",
+    weatherNow: "現在の天気",
     astroClock: "星辰クロック",
     hour: "時刻",
     birthTime: "起点時刻",
@@ -272,6 +330,8 @@ const UI_TEXT = {
     scenery: "景観メモ",
     autoWeather: "天気を自動取得",
     refreshLife: "コンテキスト更新",
+    useMyLocation: "現在地を使う",
+    checkWeather: "天気を取得",
     fetchAstro: "スナップショット更新",
     howItWorks: "仕組み",
     flow1: "月表示は通常グリッドと実際の暦月境界を切り替え可能。",
@@ -310,6 +370,13 @@ const UI_TEXT = {
       weather: "天気",
       scenePrompt: "シーンプロンプト",
       seedBrief: "連続性サマリー",
+      weatherProvider: "プロバイダ",
+      weatherTime: "天気時刻",
+      weatherDelta: "時刻差",
+      weatherTemp: "気温",
+      weatherWind: "風速",
+      weatherHumidity: "湿度",
+      weatherPrecip: "降水量",
     },
     sidebarFilters: "サイドバー表示",
     legacyDetails: "従来の日次詳細",
@@ -326,6 +393,15 @@ const UI_TEXT = {
       monthUnsupported: "この暦法は month-mode 非対応",
       monthSynced: "月境界を同期しました",
     },
+    weatherStatus: {
+      fetching: "天気を取得中...",
+      synced: "天気同期済み",
+      noApi: "天気には API Base が必要です",
+      noCoordinates: "緯度/経度が必要です",
+      geoUnsupported: "ブラウザで位置情報が使えません",
+      geoDenied: "位置情報の許可が拒否されました",
+      failed: "天気取得に失敗しました",
+    },
   },
   ar: {
     title: "استوديو التقويم السماوي",
@@ -340,6 +416,7 @@ const UI_TEXT = {
     selectedDate: "التاريخ المحدد",
     dayProfile: "تفاصيل اليوم",
     lifeContext: "سياق الزمان والمكان",
+    weatherNow: "الطقس الآن",
     astroClock: "الساعة الفلكية",
     hour: "الساعة",
     birthTime: "وقت البداية",
@@ -354,6 +431,8 @@ const UI_TEXT = {
     scenery: "وصف المشهد",
     autoWeather: "طقس تلقائي",
     refreshLife: "تحديث السياق",
+    useMyLocation: "استخدام موقعي",
+    checkWeather: "جلب الطقس",
     fetchAstro: "تحديث اللقطة",
     howItWorks: "كيف يعمل",
     flow1: "يمكن عرض الشهر كشبكة غريغورية أو حدود شهر حقيقية للتقويم المختار.",
@@ -392,6 +471,13 @@ const UI_TEXT = {
       weather: "الطقس",
       scenePrompt: "وصف المشهد",
       seedBrief: "ملخص الاستمرارية",
+      weatherProvider: "المزوّد",
+      weatherTime: "وقت الطقس",
+      weatherDelta: "فارق الوقت",
+      weatherTemp: "الحرارة",
+      weatherWind: "الرياح",
+      weatherHumidity: "الرطوبة",
+      weatherPrecip: "الهطول",
     },
     sidebarFilters: "وحدات الشريط الجانبي",
     legacyDetails: "التفاصيل الأصلية",
@@ -407,6 +493,15 @@ const UI_TEXT = {
       monthApiRequired: "نمط حدود الشهر يحتاج API",
       monthUnsupported: "هذا التقويم لا يدعم month-mode",
       monthSynced: "تمت مزامنة الشهر",
+    },
+    weatherStatus: {
+      fetching: "جارٍ جلب الطقس...",
+      synced: "تمت مزامنة الطقس",
+      noApi: "مطلوب API Base للطقس",
+      noCoordinates: "خط العرض/الطول مطلوب",
+      geoUnsupported: "المتصفح لا يدعم تحديد الموقع",
+      geoDenied: "تم رفض إذن الموقع",
+      failed: "فشل جلب الطقس",
     },
   },
 };
@@ -525,6 +620,7 @@ const state = {
   astroSnapshot: null,
   dayProfile: null,
   lifeContext: null,
+  weatherNow: null,
   monthData: null,
   lifeConfig: { ...DEFAULT_LIFE_CONFIG },
   sidebarModules: {
@@ -574,6 +670,11 @@ const refs = {
   refreshLifeBtn: document.getElementById("refreshLifeBtn"),
   lifeContextCards: document.getElementById("lifeContextCards"),
   lifeContextOutput: document.getElementById("lifeContextOutput"),
+  useLocationBtn: document.getElementById("useLocationBtn"),
+  fetchWeatherBtn: document.getElementById("fetchWeatherBtn"),
+  weatherStatus: document.getElementById("weatherStatus"),
+  weatherNowCards: document.getElementById("weatherNowCards"),
+  weatherNowOutput: document.getElementById("weatherNowOutput"),
   sidebarLegacyToggle: document.getElementById("sidebarLegacyToggle"),
   sidebarEasternToggle: document.getElementById("sidebarEasternToggle"),
   sidebarWesternToggle: document.getElementById("sidebarWesternToggle"),
@@ -696,6 +797,56 @@ function buildLifeContextRequestPayload() {
     locale: backendLocaleForLanguage(state.language),
     auto_weather: config.autoWeather,
   };
+}
+
+function buildLocationPayloadFromLifeConfig() {
+  const config = normalizeLifeConfig(state.lifeConfig);
+  const locationPayload = {};
+  if (config.locationName) locationPayload.location_name = config.locationName;
+  const lat = parseOptionalNumber(config.latitude);
+  const lon = parseOptionalNumber(config.longitude);
+  if (lat !== null) locationPayload.latitude = lat;
+  if (lon !== null) locationPayload.longitude = lon;
+  locationPayload.timezone = state.timezone;
+  if (config.background) locationPayload.background = config.background;
+  if (config.climate) locationPayload.climate = config.climate;
+  if (config.sceneryNote) locationPayload.scenery_note = config.sceneryNote;
+  return locationPayload;
+}
+
+function setWeatherStatus(key, isError = false) {
+  if (!refs.weatherStatus) return;
+  const text = i18n().weatherStatus || {};
+  refs.weatherStatus.textContent = text[key] || "";
+  refs.weatherStatus.classList.toggle("error", Boolean(isError));
+}
+
+async function fetchWeatherNowData() {
+  const normalizedApi = parseApiBase(state.apiBase);
+  if (!normalizedApi) {
+    setWeatherStatus("noApi", true);
+    state.weatherNow = null;
+    return;
+  }
+  const locationPayload = buildLocationPayloadFromLifeConfig();
+  if (locationPayload.latitude === undefined || locationPayload.longitude === undefined) {
+    setWeatherStatus("noCoordinates", true);
+    state.weatherNow = null;
+    return;
+  }
+  setWeatherStatus("fetching");
+  try {
+    const weather = await apiPost("/weather-now", {
+      location_payload: locationPayload,
+      timezone: state.timezone,
+      locale: backendLocaleForLanguage(state.language),
+    });
+    state.weatherNow = weather;
+    setWeatherStatus("synced");
+  } catch (_error) {
+    state.weatherNow = null;
+    setWeatherStatus("failed", true);
+  }
 }
 
 function formatIsoLocal(date) {
@@ -1909,6 +2060,55 @@ function renderLifeContextCards() {
   }
 }
 
+function renderWeatherNowCards() {
+  if (!refs.weatherNowCards) return;
+  const labels = i18n().labels;
+  const weatherPayload = state.weatherNow;
+  refs.weatherNowCards.innerHTML = "";
+
+  if (!weatherPayload || !weatherPayload.weather) {
+    const item = document.createElement("div");
+    item.className = "meta-item";
+    item.innerHTML = `<b>${labels.weather}</b><span>N/A</span>`;
+    refs.weatherNowCards.appendChild(item);
+    if (refs.weatherNowOutput) refs.weatherNowOutput.style.display = "none";
+    return;
+  }
+
+  const weather = weatherPayload.weather || {};
+  const cards = [
+    { label: labels.place, value: weatherPayload.location?.location_name || "N/A" },
+    { label: labels.weatherProvider, value: `${weather.provider || "unknown"} | ${weather.data_mode || "unknown"}` },
+    { label: labels.weather, value: weather.weather_label || "N/A" },
+    { label: labels.weatherTime, value: weather.time || weather.requested_time_local || "N/A" },
+    { label: labels.weatherDelta, value: weather.time_delta_minutes !== undefined && weather.time_delta_minutes !== null ? `${weather.time_delta_minutes} min` : "N/A" },
+    { label: labels.weatherTemp, value: weather.temperature_c !== undefined && weather.temperature_c !== null ? `${weather.temperature_c}C` : "N/A" },
+    { label: labels.weatherHumidity, value: weather.relative_humidity_pct !== undefined && weather.relative_humidity_pct !== null ? `${weather.relative_humidity_pct}%` : "N/A" },
+    { label: labels.weatherWind, value: weather.wind_speed_kmh !== undefined && weather.wind_speed_kmh !== null ? `${weather.wind_speed_kmh} km/h` : "N/A" },
+    { label: labels.weatherPrecip, value: weather.precipitation_mm !== undefined && weather.precipitation_mm !== null ? `${weather.precipitation_mm} mm` : "N/A" },
+  ];
+
+  cards.forEach((card) => {
+    const item = document.createElement("div");
+    item.className = "meta-item";
+    const labelNode = document.createElement("b");
+    labelNode.textContent = card.label;
+    const valueNode = document.createElement("span");
+    valueNode.textContent = card.value;
+    item.appendChild(labelNode);
+    item.appendChild(valueNode);
+    refs.weatherNowCards.appendChild(item);
+  });
+
+  const showRawJson = Boolean(state.sidebarModules.rawJson);
+  if (refs.weatherNowOutput) {
+    refs.weatherNowOutput.style.display = showRawJson ? "block" : "none";
+    if (showRawJson) {
+      refs.weatherNowOutput.textContent = JSON.stringify(weatherPayload, null, 2);
+    }
+  }
+}
+
 function pointOnCircle(center, radius, longitudeDeg) {
   const angle = ((longitudeDeg - 90) * Math.PI) / 180;
   return { x: center + radius * Math.cos(angle), y: center + radius * Math.sin(angle) };
@@ -2029,6 +2229,7 @@ function renderAll() {
   renderDayProfileCards();
   renderLifeControls();
   renderLifeContextCards();
+  renderWeatherNowCards();
   renderHour();
   renderAstro();
 
@@ -2267,6 +2468,7 @@ function bindEvents() {
     node.addEventListener("change", () => {
       state.lifeConfig[key] = node.value;
       state.lifeContext = computeLocalLifeContext();
+      state.weatherNow = null;
       renderAll();
     });
   };
@@ -2286,6 +2488,7 @@ function bindEvents() {
     refs.autoWeatherToggle.addEventListener("change", () => {
       state.lifeConfig.autoWeather = Boolean(refs.autoWeatherToggle.checked);
       state.lifeContext = computeLocalLifeContext();
+      state.weatherNow = null;
       renderAll();
     });
   }
@@ -2296,6 +2499,53 @@ function bindEvents() {
         await syncDayProfileAndAstro();
       } catch (_error) {
         setStatus("failedFallback", true);
+      }
+      renderAll();
+    });
+  }
+
+  if (refs.fetchWeatherBtn) {
+    refs.fetchWeatherBtn.addEventListener("click", async () => {
+      await fetchWeatherNowData();
+      renderAll();
+    });
+  }
+
+  if (refs.useLocationBtn) {
+    refs.useLocationBtn.addEventListener("click", async () => {
+      if (!navigator.geolocation) {
+        setWeatherStatus("geoUnsupported", true);
+        renderAll();
+        return;
+      }
+      setWeatherStatus("fetching");
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000,
+          });
+        });
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        state.lifeConfig.latitude = `${lat.toFixed(6)}`;
+        state.lifeConfig.longitude = `${lon.toFixed(6)}`;
+        if (!state.lifeConfig.locationName) {
+          state.lifeConfig.locationName = `${lat.toFixed(3)}, ${lon.toFixed(3)}`;
+        }
+        try {
+          await syncDayProfileAndAstro();
+        } catch (_error) {
+          setStatus("failedFallback", true);
+        }
+        await fetchWeatherNowData();
+      } catch (error) {
+        if (error && typeof error === "object" && "code" in error && Number(error.code) === 1) {
+          setWeatherStatus("geoDenied", true);
+        } else {
+          setWeatherStatus("failed", true);
+        }
       }
       renderAll();
     });
@@ -2373,6 +2623,14 @@ async function bootstrap() {
     state.astroSnapshot = computeLocalAstroSnapshot();
     state.lifeContext = computeLocalLifeContext();
     setStatus("failedFallback", true);
+  }
+  const locationPayload = buildLocationPayloadFromLifeConfig();
+  if (
+    locationPayload.latitude !== undefined
+    && locationPayload.longitude !== undefined
+    && parseApiBase(state.apiBase)
+  ) {
+    await fetchWeatherNowData();
   }
   renderAll();
 }

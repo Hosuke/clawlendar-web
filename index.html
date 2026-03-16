@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="./styles.css?v=7" />
 </head>
 
 <body>
@@ -106,7 +106,7 @@
           </div>
         </div>
 
-        <h3 data-i18n="dayProfile">Day Profile & Almanac</h3>
+        <h3 class="panel-title" data-i18n="dayProfile">Day Profile & Almanac</h3>
 
         <div class="sidebar-filters">
           <label><input id="sidebarLegacyToggle" type="checkbox" checked /> <span data-i18n="legacyDetails">Standard
@@ -123,7 +123,22 @@
         <div id="dayProfileCards" class="meta-list huangli-blocks"></div>
         <pre id="dayProfileOutput" class="json-output compact" style="display:none;"></pre>
 
-        <h3 data-i18n="lifeContext">Life Context</h3>
+        <h3 class="panel-title" data-i18n="astroClock">Astro Map (Cosmic Map)</h3>
+        <!-- Make the spin static for beauty via CSS -->
+        <div id="zodiacWheel" class="zodiac-wheel static-wheel"></div>
+
+        <div class="astro-actions">
+          <button id="fetchAstroBtn" class="ghost-btn" style="display:none;">Update Sync</button>
+          <span id="astroStatus" class="status-text"></span>
+        </div>
+        <pre id="astroOutput" class="json-output" style="display:none;"></pre>
+
+      </article>
+    </section>
+
+    <section class="context-grid">
+      <article class="panel context-panel">
+        <h3 class="panel-title" data-i18n="lifeContext">Life Context</h3>
         <section class="life-context-panel">
           <div class="life-context-controls">
             <div class="control-item">
@@ -179,22 +194,24 @@
           <div id="lifeContextCards" class="meta-list life-context-cards"></div>
           <pre id="lifeContextOutput" class="json-output compact" style="display:none;"></pre>
         </section>
+      </article>
 
-        <h3 data-i18n="astroClock">Astro Map (Cosmic Map)</h3>
-        <!-- Make the spin static for beauty via CSS -->
-        <div id="zodiacWheel" class="zodiac-wheel static-wheel"></div>
-
-        <div class="astro-actions">
-          <button id="fetchAstroBtn" class="ghost-btn" style="display:none;">Update Sync</button>
-          <span id="astroStatus" class="status-text"></span>
-        </div>
-        <pre id="astroOutput" class="json-output" style="display:none;"></pre>
-
+      <article class="panel context-panel">
+        <h3 class="panel-title" data-i18n="weatherNow">Weather Now</h3>
+        <section class="weather-panel">
+          <div class="weather-actions">
+            <button id="useLocationBtn" class="ghost-btn" data-i18n="useMyLocation">Use My Location</button>
+            <button id="fetchWeatherBtn" class="solid-btn" data-i18n="checkWeather">Check Weather</button>
+          </div>
+          <span id="weatherStatus" class="status-text"></span>
+          <div id="weatherNowCards" class="meta-list"></div>
+          <pre id="weatherNowOutput" class="json-output compact" style="display:none;"></pre>
+        </section>
       </article>
     </section>
 
   </main>
-  <script type="module" src="./app.js?v=5"></script>
+  <script type="module" src="./app.js?v=7"></script>
 </body>
 
 </html>

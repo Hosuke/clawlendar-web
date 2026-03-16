@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-clawlendar = {version = "==0.4.0", extras = ["api", "lunar", "extra-calendars", "metaphysics"]}
+clawlendar = {git = "https://github.com/Hosuke/Clawlender.git", ref = "main", extras = ["api", "lunar", "extra-calendars", "metaphysics"]}
 
 [requires]
 python_version = "3.12"

@@ -14,6 +14,12 @@ from clawlendar.bridge import (
     run_timeline,
 )
 
+try:
+    from clawlendar.bridge import run_weather_at_time, run_weather_now
+except ImportError:  # Backward compatibility with older clawlendar builds.
+    run_weather_at_time = None
+    run_weather_now = None
+
 # Initialize registry and warnings from the powerful Clawlendar core
 REGISTRY, WARNINGS = make_registry()
 
@@ -76,6 +82,19 @@ class LifeContextRequest(BaseModel):
     targets: Optional[List[str]] = None
     locale: str = "en"
     auto_weather: bool = True
+
+
+class WeatherNowRequest(BaseModel):
+    location_payload: Dict[str, Any]
+    timezone: str = "UTC"
+    locale: str = "en"
+
+
+class WeatherAtTimeRequest(BaseModel):
+    input_payload: Dict[str, Any]
+    location_payload: Dict[str, Any]
+    timezone: str = "UTC"
+    locale: str = "en"
 
 
 @app.get("/api")
@@ -198,6 +217,43 @@ def api_life_context(req: LifeContextRequest):
             targets=req.targets,
             locale=req.locale,
             auto_weather=req.auto_weather,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/weather-now")
+def api_weather_now(req: WeatherNowRequest):
+    """Return weather for current time at requested location."""
+    if run_weather_now is None:
+        raise HTTPException(status_code=501, detail="weather-now requires newer clawlendar backend package")
+    try:
+        return run_weather_now(
+            warnings=WARNINGS,
+            location_payload=req.location_payload,
+            timezone_name=req.timezone,
+            locale=req.locale,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/weather-at-time")
+def api_weather_at_time(req: WeatherAtTimeRequest):
+    """Return weather nearest to requested instant at requested location."""
+    if run_weather_at_time is None:
+        raise HTTPException(status_code=501, detail="weather-at-time requires newer clawlendar backend package")
+    try:
+        return run_weather_at_time(
+            warnings=WARNINGS,
+            input_payload=req.input_payload,
+            location_payload=req.location_payload,
+            timezone_name=req.timezone,
+            locale=req.locale,
         )
     except CalendarError as exc:
         raise HTTPException(status_code=400, detail=str(exc))

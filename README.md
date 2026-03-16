@@ -21,10 +21,13 @@ This project is designed for deployment on **Vercel** and focuses on:
 - Day details sidebar (solar term / sexagenary / lunar profile)
 - Day details sidebar (solar term / sexagenary / lunar profile / Bazi / Huangli / moon phase)
 - Life context panel (birth -> now timeline, role/space anchors, weather-aware world prompt)
+- Human weather panel (use-my-location + weather-now query)
 - Optional live fetch from Clawlendar API:
   - `/day-profile`
   - `/calendar-month`
   - `/life-context`
+  - `/weather-now`
+  - `/weather-at-time`
 
 ## Live demo
 
@@ -96,5 +99,7 @@ vercel --prod
 - Exact availability depends on browser runtime.
 - Cosmic wheel and day details can run on local approximation, but for canonical agent pipelines use API `/day-profile` and `/calendar-month`.
 - `life_context` supports birth/now continuity + optional weather enrichment (needs API and latitude/longitude for best results).
+- Weather source: Open-Meteo (`forecast` + `archive`) via backend API. Input can come from manual latitude/longitude or browser geolocation.
+- `weather-now` / `weather-at-time` endpoints require a backend that includes these commands (newer Clawlendar build). If unavailable, API returns `501`.
 - When connected to latest Clawlendar API, frontend forwards `locale` (`zh-CN` / `zh-TW`) so solar term and sexagenary labels are returned in the selected Chinese variant.
 - Latest `day-profile` also returns `metaphysics` block (Eastern + Western), used for Bazi and almanac cards in sidebar.

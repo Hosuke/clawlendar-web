@@ -1,4 +1,4 @@
-clawlendar==0.4.0
+clawlendar[api,lunar,extra-calendars,metaphysics] @ git+https://github.com/Hosuke/Clawlender.git@main
 lunardate>=0.2.2
 convertdate>=2.4.0
 lunar-python>=1.4.4
