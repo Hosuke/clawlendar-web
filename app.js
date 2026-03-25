@@ -581,6 +581,30 @@ const CALENDAR_TO_SOURCE = {
   chinese: "chinese_lunar",
 };
 
+const SOURCE_TO_CALENDAR = {
+  gregorian: "gregory",
+  minguo: "roc",
+  japanese_era: "japanese",
+  buddhist: "buddhist",
+  islamic: "islamic",
+  hebrew: "hebrew",
+  persian: "persian",
+  chinese_lunar: "chinese",
+};
+
+const TIMELINE_DETAIL_TARGETS = [
+  "julian",
+  "minguo",
+  "japanese_era",
+  "buddhist",
+  "islamic",
+  "hebrew",
+  "persian",
+  "sexagenary",
+  "solar_term_24",
+  "chinese_lunar",
+];
+
 const TIMEZONES = [
   "UTC",
   "Asia/Taipei",
@@ -1699,6 +1723,17 @@ function getCalendarLabel(calendar) {
   return entry[state.language] || entry.en;
 }
 
+function calendarDetailLabel(detailKey) {
+  const mappedCalendar = SOURCE_TO_CALENDAR[detailKey];
+  if (mappedCalendar) return getCalendarLabel(mappedCalendar);
+  if (detailKey === "iso_week") return "ISO Week";
+  if (detailKey === "sexagenary") return i18n().labels.sexagenary;
+  if (detailKey === "solar_term_24") return i18n().labels.solarTerm;
+  if (detailKey === "julian") return "Julian";
+  if (detailKey === "gregorian") return getCalendarLabel("gregory");
+  return detailKey;
+}
+
 function isCalendarSupported(calendar) {
   try {
     new Intl.DateTimeFormat(formatLocaleWithCalendar("en", calendar), { day: "numeric" }).format(new Date());
@@ -1735,6 +1770,70 @@ function sourceDayLabel(sourcePayload) {
   }
   if (sourcePayload.day !== undefined) return `${sourcePayload.day}`;
   return "?";
+}
+
+function formatCalendarDetailValue(detailKey, payload) {
+  if (!payload) return null;
+  if (detailKey === "gregorian") {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  if (detailKey === "julian") {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  if (detailKey === "minguo") {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  if (detailKey === "buddhist") {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  if (detailKey === "japanese_era") {
+    return `${payload.era || ""} ${payload.era_year || ""}/${payload.month || ""}/${payload.day || ""}`.trim();
+  }
+  if (detailKey === "islamic" || detailKey === "hebrew" || detailKey === "persian") {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  if (detailKey === "iso_week") {
+    return `${payload.iso_year}-W${payload.iso_week}-${payload.iso_weekday}`;
+  }
+  if (detailKey === "chinese_lunar") {
+    if (payload.display_text) return payload.display_text;
+    return `${payload.lunar_year}/${payload.lunar_month}/${payload.lunar_day}`;
+  }
+  if (detailKey === "sexagenary") {
+    const sexaName = payload.display || (
+      payload.stem_label && payload.branch_label
+        ? `${payload.stem_label}${payload.branch_label}`
+        : sexagenaryLabelForCurrentLanguage(payload.stem, payload.branch)
+    );
+    return `${sexaName}${payload.cycle_index ? ` (${payload.cycle_index})` : ""}`;
+  }
+  if (detailKey === "solar_term_24") {
+    return payload.display || (
+      payload.current_term_label && payload.next_term_label
+        ? `${payload.current_term_label} -> ${payload.next_term_label}`
+        : `${solarTermLabelForCurrentLanguage(payload.current_term)} -> ${solarTermLabelForCurrentLanguage(payload.next_term)}`
+    );
+  }
+  if (payload.display) return payload.display;
+  if (payload.year !== undefined && payload.month !== undefined && payload.day !== undefined) {
+    return `${payload.year}/${payload.month}/${payload.day}`;
+  }
+  return JSON.stringify(payload);
+}
+
+function mergeTimelineIntoDayProfile(profile, timeline) {
+  const existingDetails = profile?.calendar_details || {};
+  const projectionResults = timeline?.calendar_projection?.results || {};
+  return {
+    ...(profile || {}),
+    calendar_details: {
+      gregorian: timeline?.bridge_date_gregorian
+        ? { payload: timeline.bridge_date_gregorian, approximate: false }
+        : existingDetails.gregorian,
+      ...projectionResults,
+      ...existingDetails,
+    },
+  };
 }
 
 function formatGregorianDateFromPayload(payload) {
@@ -1834,13 +1933,20 @@ async function syncDayProfileAndAstro() {
 
   setStatus("fetching");
   try {
-    const [profileResult, lifeContextResult] = await Promise.allSettled([
+    const [profileResult, timelineResult, lifeContextResult] = await Promise.allSettled([
       apiPost("/day-profile", {
         input_payload: { local_datetime: `${isoDate}T${hour}:00:00` },
         timezone: state.timezone,
         date_basis: "local",
         include_astro: true,
         include_metaphysics: true,
+        locale: backendLocaleForLanguage(state.language),
+      }),
+      apiPost("/timeline", {
+        input_payload: { local_datetime: `${isoDate}T${hour}:00:00` },
+        timezone: state.timezone,
+        date_basis: "local",
+        targets: TIMELINE_DETAIL_TARGETS,
         locale: backendLocaleForLanguage(state.language),
       }),
       apiPost("/life-context", buildLifeContextRequestPayload()),
@@ -1851,14 +1957,17 @@ async function syncDayProfileAndAstro() {
     }
 
     const profile = profileResult.value;
-    state.dayProfile = profile;
+    const mergedProfile = timelineResult.status === "fulfilled"
+      ? mergeTimelineIntoDayProfile(profile, timelineResult.value)
+      : profile;
+    state.dayProfile = mergedProfile;
     state.astroSnapshot = {
       command: "astro_snapshot",
       source: "api_day_profile",
-      seven_governors: profile?.astro?.seven_governors || [],
-      four_remainders: profile?.astro?.four_remainders || [],
-      major_aspects: profile?.astro?.major_aspects || [],
-      warnings: profile?.warnings || [],
+      seven_governors: mergedProfile?.astro?.seven_governors || [],
+      four_remainders: mergedProfile?.astro?.four_remainders || [],
+      major_aspects: mergedProfile?.astro?.major_aspects || [],
+      warnings: mergedProfile?.warnings || [],
     };
     state.lifeContext = lifeContextResult.status === "fulfilled"
       ? lifeContextResult.value
@@ -2168,9 +2277,9 @@ function renderCalendarGrid() {
 
 function updateDashboardDate() {
   const selected = selectedInstantDate();
-  refs.mainDatePrimary.textContent = `${state.selectedDate.getDate()}`.padStart(2, "0");
+  refs.mainDatePrimary.textContent = `${dayNumber(selected, state.calendar)}`.padStart(2, "0");
   refs.mainWeekday.textContent = weekdayName(selected);
-  refs.mainDateFull.textContent = toIsoDate(state.selectedDate);
+  refs.mainDateFull.textContent = fullDate(selected, state.calendar);
   if (refs.moonPhaseBadge) {
     const moon = currentMoonPhaseInfo();
     refs.moonPhaseBadge.textContent = moon.emoji;
@@ -2197,38 +2306,45 @@ function renderDayProfileCards() {
   const showRawJson = Boolean(state.sidebarModules.rawJson);
 
   if (showLegacy) {
-    const solar = details?.solar_term_24?.payload;
-    if (solar) {
-      const solarValue = solar.display || (
-        solar.current_term_label && solar.next_term_label
-          ? `${solar.current_term_label} -> ${solar.next_term_label}`
-          : `${solarTermLabelForCurrentLanguage(solar.current_term)} -> ${solarTermLabelForCurrentLanguage(solar.next_term)}`
-      );
-      cards.push({ label: labels.solarTerm, value: solarValue });
-    }
-    const sexa = details?.sexagenary?.payload;
-    if (sexa) {
-      const sexaName = sexa.display || (
-        sexa.stem_label && sexa.branch_label
-          ? `${sexa.stem_label}${sexa.branch_label}`
-          : sexagenaryLabelForCurrentLanguage(sexa.stem, sexa.branch)
-      );
-      cards.push({
-        label: labels.sexagenary,
-        value: `${sexaName}${sexa.cycle_index ? ` (${sexa.cycle_index})` : ""}`,
-      });
-    }
-    const lunar = details?.chinese_lunar?.payload;
-    if (lunar) {
-      if (lunar.display_text) {
-        cards.push({ label: labels.lunar, value: lunar.display_text });
-      } else {
-        cards.push({ label: labels.lunar, value: `${lunar.lunar_year}/${lunar.lunar_month}/${lunar.lunar_day}` });
-      }
-    }
-    const iso = details?.iso_week?.payload;
-    if (iso) {
-      cards.push({ label: labels.week, value: `${iso.iso_year}-W${iso.iso_week}-${iso.iso_weekday}` });
+    const seen = new Set();
+    const preferredOrder = [
+      "gregorian",
+      CALENDAR_TO_SOURCE[state.calendar],
+      "minguo",
+      "japanese_era",
+      "buddhist",
+      "julian",
+      "islamic",
+      "hebrew",
+      "persian",
+      "chinese_lunar",
+      "iso_week",
+      "sexagenary",
+      "solar_term_24",
+    ].filter(Boolean);
+
+    preferredOrder.forEach((detailKey) => {
+      if (seen.has(detailKey)) return;
+      seen.add(detailKey);
+      const payload = details?.[detailKey]?.payload;
+      if (!payload) return;
+      const value = formatCalendarDetailValue(detailKey, payload);
+      if (!value) return;
+      const label = detailKey === "iso_week" ? labels.week : calendarDetailLabel(detailKey);
+      cards.push({ label, value });
+    });
+
+    Object.entries(details).forEach(([detailKey, value]) => {
+      if (seen.has(detailKey)) return;
+      const payload = value?.payload;
+      if (!payload) return;
+      const formatted = formatCalendarDetailValue(detailKey, payload);
+      if (!formatted) return;
+      cards.push({ label: calendarDetailLabel(detailKey), value: formatted });
+    });
+
+    if (cards.length === 0) {
+      cards.push({ label: getCalendarLabel("gregory"), value: toIsoDate(state.selectedDate) });
     }
   }
 

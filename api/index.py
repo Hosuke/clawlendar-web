@@ -10,7 +10,10 @@ from clawlendar.bridge import (
     run_capabilities,
     run_convert,
     run_day_profile,
+    run_historical_resolve,
+    run_historical_spacetime_snapshot,
     run_life_context,
+    run_now,
     run_timeline,
 )
 
@@ -47,6 +50,16 @@ class TimelineRequest(BaseModel):
     date_basis: str = "local"
     targets: Optional[List[str]] = None
     locale: str = "en"
+
+
+class NowRequest(BaseModel):
+    timezone: str = "UTC"
+    date_basis: str = "local"
+    targets: Optional[List[str]] = None
+    locale: str = "en"
+    include_day_profile: bool = False
+    include_astro: bool = False
+    include_metaphysics: bool = True
 
 class DayProfileRequest(BaseModel):
     input_payload: Dict[str, Any]
@@ -111,6 +124,24 @@ class SpacetimeSnapshotRequest(BaseModel):
     include_weather: bool = True
 
 
+class HistoricalResolveRequest(BaseModel):
+    historical_input_payload: Dict[str, Any]
+    timezone: str = "UTC"
+    location_payload: Optional[Dict[str, Any]] = None
+    locale: str = "en"
+
+
+class HistoricalSpacetimeSnapshotRequest(BaseModel):
+    historical_input_payload: Dict[str, Any]
+    timezone: str = "UTC"
+    location_payload: Optional[Dict[str, Any]] = None
+    subject_payload: Optional[Dict[str, Any]] = None
+    targets: Optional[List[str]] = None
+    locale: str = "en"
+    include_astro: bool = True
+    include_metaphysics: bool = True
+
+
 @app.get("/api")
 def read_root():
     return {
@@ -123,6 +154,53 @@ def read_root():
 def api_capabilities():
     """List all supported calendars and their schemas."""
     return run_capabilities(REGISTRY, WARNINGS)
+
+
+@app.get("/api/now")
+def api_now(
+    timezone: str = "UTC",
+    date_basis: str = "local",
+    locale: str = "en",
+    include_day_profile: bool = False,
+    include_astro: bool = False,
+    include_metaphysics: bool = True,
+):
+    try:
+        return run_now(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            timezone_name=timezone,
+            date_basis=date_basis,
+            targets=None,
+            locale=locale,
+            include_day_profile=include_day_profile,
+            include_astro=include_astro,
+            include_metaphysics=include_metaphysics,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/now")
+def api_now_post(req: NowRequest):
+    try:
+        return run_now(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            timezone_name=req.timezone,
+            date_basis=req.date_basis,
+            targets=req.targets,
+            locale=req.locale,
+            include_day_profile=req.include_day_profile,
+            include_astro=req.include_astro,
+            include_metaphysics=req.include_metaphysics,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/api/timeline")
@@ -296,6 +374,44 @@ def api_spacetime_snapshot(req: SpacetimeSnapshotRequest):
             include_astro=req.include_astro,
             include_metaphysics=req.include_metaphysics,
             include_weather=req.include_weather,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/historical-resolve")
+def api_historical_resolve(req: HistoricalResolveRequest):
+    try:
+        return run_historical_resolve(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            historical_input_payload=req.historical_input_payload,
+            timezone_name=req.timezone,
+            location_payload=req.location_payload,
+            locale=req.locale,
+        )
+    except CalendarError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/historical-spacetime-snapshot")
+def api_historical_spacetime_snapshot(req: HistoricalSpacetimeSnapshotRequest):
+    try:
+        return run_historical_spacetime_snapshot(
+            registry=REGISTRY,
+            warnings=WARNINGS,
+            historical_input_payload=req.historical_input_payload,
+            timezone_name=req.timezone,
+            location_payload=req.location_payload,
+            subject_payload=req.subject_payload,
+            targets=req.targets,
+            locale=req.locale,
+            include_astro=req.include_astro,
+            include_metaphysics=req.include_metaphysics,
         )
     except CalendarError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
